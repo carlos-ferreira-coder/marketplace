@@ -1,0 +1,47 @@
+services:
+  api:
+    build:
+      context: ./marketplace-api
+      dockerfile: Dockerfile
+    container_name: marketplace-api
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./marketplace-api/.env
+    volumes:
+      - ./marketplace-api:/app
+      - /app/node_modules
+    command: sh -c "npx prisma migrate dev && npx prisma db seed && npm run start:dev"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./marketplace
+      dockerfile: Dockerfile
+    container_name: marketplace-frontend
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./marketplace:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev
+    depends_on:
+      - api
+
+  db:
+    image: postgres:17
+    container_name: marketplace-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: marketplace_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

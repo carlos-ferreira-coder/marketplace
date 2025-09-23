@@ -1,5 +1,5 @@
-import { iconBagShopping } from "./fontAwesome";
-import { useCart } from "../hooks/useCart";
+import { iconBagShopping } from "../fontAwesome";
+import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
 
 const CartCountItems = styled.span`

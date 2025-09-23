@@ -1,5 +1,9 @@
 :root {
   --background: #ffffff;
+  --logo-color: #5d5d6d;
+  --text-dark: #737380;
+  --bg-secondary: #f3f5f6;
+  --delete-color: #de3838;
 }
 
 html,

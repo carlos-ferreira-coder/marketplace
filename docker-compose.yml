@@ -15,6 +15,22 @@ services:
     depends_on:
       - db
 
+  prisma-studio:
+    build:
+      context: ./marketplace-api
+      dockerfile: Dockerfile
+    container_name: prisma-studio
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./marketplace-api:/app
+      - /app/node_modules
+    command: npx prisma studio
+    env_file:
+      - ./marketplace-api/.env
+    depends_on:
+      - db
+
   frontend:
     build:
       context: ./marketplace

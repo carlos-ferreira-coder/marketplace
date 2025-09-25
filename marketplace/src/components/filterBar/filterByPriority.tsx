@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { iconAngleDown, iconAngleUp } from "../icons/fontAwesome";
+import { IconAngleDown, IconAngleUp } from "../icons/fontAwesome";
 import { useState } from "react";
 import { useFilter } from "@/hooks/useFilter";
 import { FilterPriority, FilterPriorityLabels } from "@/types/FilterPriority";
@@ -77,7 +77,7 @@ export const FilterByPriority = () => {
   return (
     <FilterContainer>
       <button onClick={handleOpen}>
-        Organizar por {isOpen ? iconAngleUp : iconAngleDown}
+        Organizar por {isOpen ? <IconAngleUp /> : <IconAngleDown />}
       </button>
 
       {isOpen && (

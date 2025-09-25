@@ -1,6 +1,6 @@
-import { iconBagShopping } from "../icons/fontAwesome";
 import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
+import { IconCart } from "../icons/cartSvg";
 
 const DivContainer = styled.div`
   position: relative;
@@ -30,7 +30,7 @@ export const CartControl = () => {
 
   return (
     <DivContainer>
-      {iconBagShopping}
+      <IconCart />
       {cart && <CartCountItems>{cart.quantity}</CartCountItems>}
     </DivContainer>
   );

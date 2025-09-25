@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
-  faBagShopping,
   faAngleLeft,
   faAngleRight,
   faEllipsis,
@@ -9,16 +8,26 @@ import {
   faAngleDown,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const iconSearch = <FontAwesomeIcon icon={faSearch} />;
+export const IconSearch = () => {
+  return <FontAwesomeIcon icon={faSearch} />;
+};
 
-export const iconBagShopping = <FontAwesomeIcon icon={faBagShopping} />;
+export const IconAngleUp = () => {
+  return <FontAwesomeIcon icon={faAngleUp} />;
+};
 
-export const iconAngleUp = <FontAwesomeIcon icon={faAngleUp} />;
+export const IconAngleDown = () => {
+  return <FontAwesomeIcon icon={faAngleDown} />;
+};
 
-export const iconAngleDown = <FontAwesomeIcon icon={faAngleDown} />;
+export const IconAngleLeft = () => {
+  return <FontAwesomeIcon icon={faAngleLeft} />;
+};
 
-export const iconAngleLeft = <FontAwesomeIcon icon={faAngleLeft} />;
+export const IconAngleRight = () => {
+  return <FontAwesomeIcon icon={faAngleRight} />;
+};
 
-export const iconAngleRight = <FontAwesomeIcon icon={faAngleRight} />;
-
-export const iconEllipsis = <FontAwesomeIcon icon={faEllipsis} />;
+export const IconEllipsis = () => {
+  return <FontAwesomeIcon icon={faEllipsis} />;
+};

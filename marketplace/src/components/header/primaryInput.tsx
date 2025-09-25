@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { InputHTMLAttributes } from "react";
-import { iconSearch } from "../icons/fontAwesome";
+import { IconSearch } from "../icons/fontAwesome";
 
 export const PrimaryInput = styled.input`
   width: 350px;
@@ -36,7 +36,7 @@ export const PrimaryInputSearch = (
   return (
     <InputContainer>
       <PrimaryInput {...props} />
-      {iconSearch}
+      <IconSearch />
     </InputContainer>
   );
 };

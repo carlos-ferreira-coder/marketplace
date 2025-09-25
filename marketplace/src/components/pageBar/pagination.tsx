@@ -1,9 +1,9 @@
 import { useFilter } from "@/hooks/useFilter";
 import styled from "styled-components";
 import {
-  iconAngleLeft,
-  iconAngleRight,
-  iconEllipsis,
+  IconAngleLeft,
+  IconAngleRight,
+  IconEllipsis,
 } from "../icons/fontAwesome";
 import { Pagination } from "@/hooks/usePagination";
 
@@ -58,13 +58,13 @@ export const PaginationBar = () => {
   return (
     <PageList>
       <PageItem disabled={page < 2} onClick={() => handleChangePage(page - 1)}>
-        {iconAngleLeft}
+        <IconAngleLeft />
       </PageItem>
 
       {pagination.map((item, idx) =>
         item.type === "ellipsis" ? (
           <PageItem key={`ellipsis-${idx}`} disabled>
-            {iconEllipsis}
+            <IconEllipsis />
           </PageItem>
         ) : (
           <PageItem
@@ -81,7 +81,7 @@ export const PaginationBar = () => {
         disabled={page >= totalPages}
         onClick={() => handleChangePage(page + 1)}
       >
-        {iconAngleRight}
+        <IconAngleRight />
       </PageItem>
     </PageList>
   );

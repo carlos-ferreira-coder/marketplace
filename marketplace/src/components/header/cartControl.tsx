@@ -4,23 +4,20 @@ import { IconCart } from "../icons/cartSvg";
 
 const DivContainer = styled.div`
   position: relative;
-
-  svg {
-    width: 25px;
-    height: 25px;
-    color: var(--text-dark);
-  }
+  cursor: pointer;
+  border: none;
+  background: transparent;
 `;
 
 const CartCountItems = styled.span`
   width: 17px;
   height: 17px;
-  padding: 0px 5px;
-  border-radius: 50%;
+  border-radius: 100%;
+  padding: 0 5px;
+  font-size: 10px;
 
-  font-size: 13px;
-  color: white;
   background-color: var(--delete-color);
+  color: white;
 
   margin-left: -10px;
 `;

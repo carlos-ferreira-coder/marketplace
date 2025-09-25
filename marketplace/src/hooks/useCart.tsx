@@ -1,18 +1,14 @@
 import { apiAxios } from "@/services/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
-// TODO types
+// TODO all
 interface CartProps {
   quantity: number;
 }
 
 export const useCart = () => {
   const [cart, setCart] = useState<null | CartProps>(null);
-
-  useEffect(() => {
-    update();
-  }, []);
 
   const update = async () => {
     await apiAxios

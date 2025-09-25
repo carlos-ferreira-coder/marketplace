@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { InputHTMLAttributes } from "react";
-import { iconSearch } from "../fontAwesome";
+import { iconSearch } from "../icons/fontAwesome";
 
 export const PrimaryInput = styled.input`
   width: 350px;

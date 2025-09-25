@@ -21,6 +21,8 @@ const TagHeader = styled.header`
   justify-content: space-between;
   padding: 20px 150px;
 
+  background-color: var(--shapes);
+
   > div {
     display: flex;
     align-items: center;
@@ -29,8 +31,11 @@ const TagHeader = styled.header`
   }
 `;
 
+// TODO Adicionar link para home
 const Logo = styled.a`
+  cursor: pointer;
   color: var(--logo-color);
+
   font-size: 40px;
   font-weight: 400;
   text-decoration: none;

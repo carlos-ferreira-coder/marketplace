@@ -1,5 +1,6 @@
+import { faCircleNotch, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { IconCircleNotch, IconSpinner } from "./icons/fontAwesome";
 
 const DivContainer = styled.div`
   display: flex;
@@ -38,8 +39,10 @@ interface LoaderProps {
 export const Loader = ({ icon }: LoaderProps) => {
   return (
     <DivContainer>
-      {icon === IconLoader.spinner && <IconSpinner />}
-      {icon === IconLoader.circleNotch && <IconCircleNotch />}
+      {icon === IconLoader.spinner && <FontAwesomeIcon icon={faSpinner} />}
+      {icon === IconLoader.circleNotch && (
+        <FontAwesomeIcon icon={faCircleNotch} />
+      )}
     </DivContainer>
   );
 };

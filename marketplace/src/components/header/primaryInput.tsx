@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { InputHTMLAttributes } from "react";
-import { IconSearch } from "../icons/fontAwesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const PrimaryInput = styled.input`
   width: 350px;
@@ -44,7 +45,7 @@ export const PrimaryInputSearch = ({ handleChange, ...props }: InputProps) => {
         }}
         {...props}
       />
-      <IconSearch />
+      <FontAwesomeIcon icon={faSearch} />
     </InputContainer>
   );
 };

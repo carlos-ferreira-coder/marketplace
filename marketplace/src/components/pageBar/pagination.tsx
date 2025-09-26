@@ -1,11 +1,12 @@
 import { useFilter } from "@/hooks/useFilter";
 import styled from "styled-components";
-import {
-  IconAngleLeft,
-  IconAngleRight,
-  IconEllipsis,
-} from "../icons/fontAwesome";
 import { Pagination } from "@/hooks/usePagination";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faEllipsis,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface PageItemProps {
   selected?: boolean;
@@ -60,7 +61,7 @@ export const PaginationBar = () => {
       {pagination.map((item, idx) =>
         item.type === "ellipsis" ? (
           <PageItem key={`ellipsis-${idx}`} disabled>
-            <IconEllipsis />
+            <FontAwesomeIcon icon={faEllipsis} />
           </PageItem>
         ) : (
           <PageItem
@@ -74,14 +75,14 @@ export const PaginationBar = () => {
       )}
 
       <PageItem disabled={page < 2} onClick={() => handleChangePage(page - 1)}>
-        <IconAngleLeft />
+        <FontAwesomeIcon icon={faAngleLeft} />
       </PageItem>
 
       <PageItem
         disabled={page >= totalPages}
         onClick={() => handleChangePage(page + 1)}
       >
-        <IconAngleRight />
+        <FontAwesomeIcon icon={faAngleRight} />
       </PageItem>
     </PageList>
   );

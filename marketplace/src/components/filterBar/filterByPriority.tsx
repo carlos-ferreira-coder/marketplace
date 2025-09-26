@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { IconAngleDown, IconAngleUp } from "../icons/fontAwesome";
 import { useState } from "react";
 import { useFilter } from "@/hooks/useFilter";
 import { FilterPriority, FilterPriorityLabels } from "@/types/FilterPriority";
 import { useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
 interface PriorityFilterProps {
   isOpen: boolean;
@@ -101,7 +102,12 @@ export const FilterByPriority = () => {
   return (
     <FilterContainer ref={containerRef}>
       <button onClick={handleOpen}>
-        Organizar por {isOpen ? <IconAngleUp /> : <IconAngleDown />}
+        Organizar por{" "}
+        {isOpen ? (
+          <FontAwesomeIcon icon={faAngleUp} />
+        ) : (
+          <FontAwesomeIcon icon={faAngleDown} />
+        )}
       </button>
 
       {isOpen && (

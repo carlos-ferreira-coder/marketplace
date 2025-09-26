@@ -33,9 +33,12 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     try {
+      // TODO tipar corretamente
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.jwtSecret,
       });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       request['user'] = payload;
     } catch {
       throw new UnauthorizedException();

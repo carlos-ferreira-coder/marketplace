@@ -1,11 +1,10 @@
 "use client";
 
-import { apiAxios } from "@/services/axios";
 import { FilterPriority } from "@/types/FilterPriority";
 import { FilterType } from "@/types/FilterType";
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 
-interface FilterContextType {
+export interface FilterContextType {
   page: number;
   limit: number;
   total: number;
@@ -51,25 +50,13 @@ export function FilterContextProvider({
   children,
 }: FilterContextProviderProps) {
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(2);
   const [total, setTotal] = useState<number>(0);
   const [type, setType] = useState<FilterType>(FilterType.ALL);
   const [priority, setPriority] = useState<FilterPriority>(FilterPriority.NEWS);
   const [name, setName] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [price, setPrice] = useState<number | null>(null);
-
-  useEffect(() => {
-    update();
-  }, [page, limit, type, name, description, price]);
-
-  const update = async () => {
-    await apiAxios.get("/products").then((response) => {
-      setPage(response.data.page);
-      setLimit(response.data.limit);
-      setTotal(response.data.total);
-    });
-  };
 
   return (
     <FilterContext.Provider

@@ -1,4 +1,4 @@
-import { apiAxios } from "@/services/axios";
+import { api } from "@/services/axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -11,7 +11,7 @@ export const useCart = () => {
   const [cart, setCart] = useState<null | CartProps>(null);
 
   const update = async () => {
-    await apiAxios
+    await api
       .get("/cart")
       .then((response) => {
         setCart(response.data);

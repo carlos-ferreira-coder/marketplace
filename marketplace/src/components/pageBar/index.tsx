@@ -8,7 +8,6 @@ const DivContainer = styled.div`
   width: 100%;
   align-items: start;
   justify-content: flex-end;
-  margin-top: 20px;
 `;
 
 export const PageBar = () => {

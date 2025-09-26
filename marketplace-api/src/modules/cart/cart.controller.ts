@@ -32,6 +32,8 @@ export class CartController {
   @ApiResponse({ status: 404, description: 'Cart not found' })
   @ApiBearerAuth()
   async getCart(@Req() req: Request) {
+    // TODO: tipar corretamente o retorno do handler
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.queryBus.execute(new GetCartQuery(req.user.sub));
   }
 
@@ -47,6 +49,8 @@ export class CartController {
     @Body() addProductToCartDto: AddProductToCartDto,
     @Req() req: Request,
   ) {
+    // TODO: tipar corretamente o retorno do handler
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.commandBus.execute(
       new AddProductToCartImpl({
         ...addProductToCartDto,
@@ -68,6 +72,8 @@ export class CartController {
     @Body() removeProductFromCartDto: RemoveProductFromCartDto,
     @Req() req: Request,
   ) {
+    // TODO: tipar corretamente o retorno do handler
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.commandBus.execute(
       new RemoveProductFromCartImpl({
         ...removeProductFromCartDto,
@@ -89,6 +95,8 @@ export class CartController {
     @Body() decreaseProductQuantityDto: DecreaseProductQuantityDto,
     @Req() req: Request,
   ) {
+    // TODO: tipar corretamente o retorno do handler
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.commandBus.execute(
       new DecreaseProductQuantityImpl({
         ...decreaseProductQuantityDto,

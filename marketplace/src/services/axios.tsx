@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const marketplaceApi = process.env.API_BASE_URL;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export const apiAxios = axios.create({
-  baseURL: marketplaceApi,
+export const api = axios.create({
+  baseURL: apiUrl,
 });

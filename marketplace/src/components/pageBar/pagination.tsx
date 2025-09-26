@@ -24,7 +24,7 @@ const PageItem = styled.li<PageItemProps>`
   font-family: inherit;
   font-weight: ${(props) => (props.selected ? "600" : "400")};
   font-size: 16px;
-  line-height: 22px;
+  line-height: 150%;
   text-align: center;
 
   display: flex;
@@ -57,10 +57,6 @@ export const PaginationBar = () => {
 
   return (
     <PageList>
-      <PageItem disabled={page < 2} onClick={() => handleChangePage(page - 1)}>
-        <IconAngleLeft />
-      </PageItem>
-
       {pagination.map((item, idx) =>
         item.type === "ellipsis" ? (
           <PageItem key={`ellipsis-${idx}`} disabled>
@@ -76,6 +72,10 @@ export const PaginationBar = () => {
           </PageItem>
         )
       )}
+
+      <PageItem disabled={page < 2} onClick={() => handleChangePage(page - 1)}>
+        <IconAngleLeft />
+      </PageItem>
 
       <PageItem
         disabled={page >= totalPages}

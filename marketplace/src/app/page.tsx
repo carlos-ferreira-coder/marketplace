@@ -15,6 +15,7 @@ export default function Home() {
           <FilterBar />
           <PageBar />
           <ProductList />
+          <PageBar />
         </main>
       </div>
     </QueryClientProvider>

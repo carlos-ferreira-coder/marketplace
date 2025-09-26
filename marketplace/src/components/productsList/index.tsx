@@ -3,6 +3,7 @@
 import { useProducts } from "@/hooks/useProducts";
 import { ProductCard } from "./productCart";
 import styled from "styled-components";
+import { IconLoader, Loader } from "../loader";
 
 const ListContainer = styled.div`
   display: grid;
@@ -12,7 +13,9 @@ const ListContainer = styled.div`
 `;
 
 export const ProductList = () => {
-  const { data } = useProducts();
+  const { data, isLoading } = useProducts();
+
+  if (isLoading) return <Loader icon={IconLoader.spinner} />;
 
   return (
     <ListContainer>

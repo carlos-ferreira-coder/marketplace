@@ -4,13 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useFilter } from "./useFilter";
 import { FilterContextType } from "@/contexts/filterContexts";
 import { toast } from "react-toastify";
-import { useDeferredValue } from "react";
+import { useDeferredValue, useState } from "react";
 
 const fetcher = async (
   params: string,
-  filter: FilterContextType
+  filter: FilterContextType,
+  setIsLoading: (value: boolean) => void
 ): Promise<ProductsResponseDTO | void> => {
   try {
+    setIsLoading(true);
+
     const { data: response } = await api.get<ProductsResponseDTO>(
       `/products?${params}`
     );
@@ -19,6 +22,7 @@ const fetcher = async (
     filter.setLimit(response.limit);
     filter.setTotal(response.total);
 
+    setIsLoading(false);
     return response;
   } catch (error) {
     console.log(error);
@@ -29,6 +33,7 @@ const fetcher = async (
 const mountParams = ({
   page,
   limit,
+  search,
   type,
   priority,
   name,
@@ -40,6 +45,7 @@ const mountParams = ({
   params.append("page", page.toString());
   params.append("limit", limit.toString());
 
+  //if (search) params.append("search", search);
   //if (type) params.append("type", type.toString());
   //if (priority) params.append("priority", priority.toString());
 
@@ -51,19 +57,23 @@ const mountParams = ({
 };
 
 // TODO filter by (search, type, priority)
+// TODO Search implementado na gambiarra concertar! kkkkkk
 export const useProducts = () => {
   const filter = useFilter();
   const params = mountParams(filter);
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const searchDeferred = useDeferredValue(filter.search);
   const regexSearchDeferred = new RegExp(searchDeferred, "i");
 
-  const { data } = useQuery({
-    queryFn: () => fetcher(params, filter),
+  const { data: productsResponse } = useQuery({
+    queryFn: () => fetcher(params, filter, setIsLoading),
     queryKey: [
       "products",
       filter.page,
       filter.limit,
+      //searchDeferred,
       filter.type,
       filter.priority,
       filter.name,
@@ -72,9 +82,9 @@ export const useProducts = () => {
     ],
   });
 
-  if (!data?.products) return { data: data };
+  if (!productsResponse?.products) return { data: productsResponse };
 
-  const productsFiltered = data.products.filter(
+  const productsFiltered = productsResponse.products.filter(
     (product) =>
       regexSearchDeferred.test(product.name) ||
       regexSearchDeferred.test(product.description)
@@ -82,8 +92,9 @@ export const useProducts = () => {
 
   return {
     data: {
-      ...data,
+      ...productsResponse,
       products: productsFiltered,
     },
+    isLoading,
   };
 };

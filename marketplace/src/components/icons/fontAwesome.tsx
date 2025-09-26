@@ -6,6 +6,8 @@ import {
   faEllipsis,
   faAngleUp,
   faAngleDown,
+  faSpinner,
+  faCircleNotch,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const IconSearch = () => {
@@ -30,4 +32,12 @@ export const IconAngleRight = () => {
 
 export const IconEllipsis = () => {
   return <FontAwesomeIcon icon={faEllipsis} />;
+};
+
+export const IconSpinner = () => {
+  return <FontAwesomeIcon icon={faSpinner} />;
+};
+
+export const IconCircleNotch = () => {
+  return <FontAwesomeIcon icon={faCircleNotch} />;
 };

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useFilter } from "./useFilter";
 import { FilterContextType } from "@/contexts/filterContexts";
 import { toast } from "react-toastify";
+import { useDeferredValue } from "react";
 
 const fetcher = async (
   params: string,
@@ -49,10 +50,13 @@ const mountParams = ({
   return params.toString();
 };
 
-// TODO filter by type e set priority
+// TODO filter by (search, type, priority)
 export const useProducts = () => {
   const filter = useFilter();
   const params = mountParams(filter);
+
+  const searchDeferred = useDeferredValue(filter.search);
+  const regexSearchDeferred = new RegExp(searchDeferred, "i");
 
   const { data } = useQuery({
     queryFn: () => fetcher(params, filter),
@@ -60,15 +64,26 @@ export const useProducts = () => {
       "products",
       filter.page,
       filter.limit,
+      filter.type,
+      filter.priority,
       filter.name,
       filter.description,
       filter.price,
-      filter.type,
-      filter.priority,
     ],
   });
 
+  if (!data?.products) return { data: data };
+
+  const productsFiltered = data.products.filter(
+    (product) =>
+      regexSearchDeferred.test(product.name) ||
+      regexSearchDeferred.test(product.description)
+  );
+
   return {
-    data: data,
+    data: {
+      ...data,
+      products: productsFiltered,
+    },
   };
 };

@@ -30,12 +30,20 @@ const InputContainer = styled.div`
   }
 `;
 
-export const PrimaryInputSearch = (
-  props: InputHTMLAttributes<HTMLInputElement>
-) => {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  value: string;
+  handleChange: (value: string) => void;
+}
+
+export const PrimaryInputSearch = ({ handleChange, ...props }: InputProps) => {
   return (
     <InputContainer>
-      <PrimaryInput {...props} />
+      <PrimaryInput
+        onChange={(event) => {
+          handleChange(event.target.value);
+        }}
+        {...props}
+      />
       <IconSearch />
     </InputContainer>
   );

@@ -8,6 +8,7 @@ export interface FilterContextType {
   page: number;
   limit: number;
   total: number;
+  search: string;
   type: FilterType;
   priority: FilterPriority;
   name: string | null;
@@ -16,6 +17,7 @@ export interface FilterContextType {
   setPage: (page: number) => void;
   setLimit: (limit: number) => void;
   setTotal: (total: number) => void;
+  setSearch: (search: string) => void;
   setType: (type: FilterType) => void;
   setPriority: (priority: FilterPriority) => void;
   setName: (name: string | null) => void;
@@ -27,6 +29,7 @@ export const FilterContext = createContext<FilterContextType>({
   page: 1,
   limit: 10,
   total: 0,
+  search: "",
   type: FilterType.ALL,
   priority: FilterPriority.NEWS,
   name: null,
@@ -35,6 +38,7 @@ export const FilterContext = createContext<FilterContextType>({
   setPage: () => {},
   setLimit: () => {},
   setTotal: () => {},
+  setSearch: () => {},
   setType: () => {},
   setPriority: () => {},
   setName: () => {},
@@ -52,6 +56,7 @@ export function FilterContextProvider({
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
+  const [search, setSearch] = useState<string>("");
   const [type, setType] = useState<FilterType>(FilterType.ALL);
   const [priority, setPriority] = useState<FilterPriority>(FilterPriority.NEWS);
   const [name, setName] = useState<string | null>(null);
@@ -64,6 +69,7 @@ export function FilterContextProvider({
         page,
         limit,
         total,
+        search,
         type,
         priority,
         name,
@@ -72,6 +78,7 @@ export function FilterContextProvider({
         setPage,
         setLimit,
         setTotal,
+        setSearch,
         setType,
         setPriority,
         setName,

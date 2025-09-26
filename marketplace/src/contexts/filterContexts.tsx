@@ -50,7 +50,7 @@ export function FilterContextProvider({
   children,
 }: FilterContextProviderProps) {
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(2);
+  const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
   const [type, setType] = useState<FilterType>(FilterType.ALL);
   const [priority, setPriority] = useState<FilterPriority>(FilterPriority.NEWS);

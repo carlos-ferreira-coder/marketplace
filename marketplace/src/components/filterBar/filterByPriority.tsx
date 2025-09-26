@@ -37,9 +37,11 @@ const FilterContainer = styled.div`
 const PriorityFilter = styled.ul`
   position: absolute;
   padding: 12px 16px;
-  width: 250px;
+  width: 200px;
+  z-index: 999;
 
-  top: 100%;
+  top: 150%;
+  right: 0;
 
   border-radius: 4px;
   background: #ffffff;
@@ -48,7 +50,7 @@ const PriorityFilter = styled.ul`
   list-style: none;
 
   li + li {
-    margin-top: 8px;
+    margin-top: 4px;
   }
 `;
 
@@ -63,6 +65,7 @@ const FilterItem = styled.li<FilterItemProps>`
     props.selected ? "var(--orange-low)" : "var(--text-dark)"};
 `;
 
+// TODO click outside close
 export const FilterByPriority = () => {
   const { priority, setPriority } = useFilter();
   const [isOpen, setIsOpen] = useState<boolean>(false);

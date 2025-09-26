@@ -3,7 +3,11 @@ import { IconAngleDown, IconAngleUp } from "../icons/fontAwesome";
 import { useState } from "react";
 import { useFilter } from "@/hooks/useFilter";
 import { FilterPriority, FilterPriorityLabels } from "@/types/FilterPriority";
+import { useRef, useEffect } from "react";
 
+interface PriorityFilterProps {
+  isOpen: boolean;
+}
 interface FilterItemProps {
   selected?: boolean;
 }
@@ -34,7 +38,7 @@ const FilterContainer = styled.div`
   }
 `;
 
-const PriorityFilter = styled.ul`
+const PriorityFilter = styled.ul<PriorityFilterProps>`
   position: absolute;
   padding: 12px 16px;
   width: 200px;
@@ -46,6 +50,10 @@ const PriorityFilter = styled.ul`
   border-radius: 4px;
   background: #ffffff;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  transform: translateY(${(props) => (props.isOpen ? "0" : "-10px")});
 
   list-style: none;
 
@@ -65,10 +73,10 @@ const FilterItem = styled.li<FilterItemProps>`
     props.selected ? "var(--orange-low)" : "var(--text-dark)"};
 `;
 
-// TODO click outside close
 export const FilterByPriority = () => {
   const { priority, setPriority } = useFilter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleOpen = () => setIsOpen((prev) => !prev);
 
@@ -77,14 +85,27 @@ export const FilterByPriority = () => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <FilterContainer>
+    <FilterContainer ref={containerRef}>
       <button onClick={handleOpen}>
         Organizar por {isOpen ? <IconAngleUp /> : <IconAngleDown />}
       </button>
 
       {isOpen && (
-        <PriorityFilter>
+        <PriorityFilter isOpen={isOpen}>
           {Object.values(FilterPriority)
             .filter((key) => typeof key === "number") // evita duplicar porque TS enum gera keys numéricas e string
             .map((p) => (

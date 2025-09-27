@@ -8,6 +8,8 @@ const DivContainer = styled.div`
   border: none;
   background: transparent;
   top: 3px;
+
+  color: var(--text-dark);
 `;
 
 const CartCountItems = styled.span`

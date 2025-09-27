@@ -1,8 +1,12 @@
 import { IconCart } from "@/components/icons/cart";
+import { useAuth } from "@/hooks/useAuth";
 import { useCartMutation } from "@/hooks/useCart";
 import { CartAddProductRequestDTO } from "@/types/dto/cart/CartAddProductRequestDTO";
 import { ProductResponseDTO } from "@/types/dto/products/productResponseDTO";
+import { RoleDTO } from "@/types/dto/user/roleDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 
 interface ProductDetailsProps {
@@ -31,7 +35,6 @@ const Btn = styled.button`
   mix-blend-mode: multiply;
   border-radius: 4px;
   border: none;
-  cursor: pointer;
   padding: 10px 0;
   text-align: center;
   font-weight: 500;
@@ -39,6 +42,7 @@ const Btn = styled.button`
   text-transform: uppercase;
 
   color: white;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 `;
 
 const ProductInfo = styled.div`
@@ -114,6 +118,8 @@ const ProductDescription = styled.div`
 `;
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const user = useAuth();
+  const router = useRouter();
   const { cartAddProduct } = useCartMutation();
 
   const handleCartAddProduct = () => {
@@ -123,6 +129,9 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
     };
 
     cartAddProduct(cartAddProductData);
+
+    const msg = new URLSearchParams(`${product.name} inserido(a) no carrinho!`);
+    router.push(`/cart?success-msg=${msg}`);
   };
 
   return (
@@ -144,7 +153,10 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </ProductDescription>
       </ProductInfo>
 
-      <Btn onClick={handleCartAddProduct}>
+      <Btn
+        onClick={handleCartAddProduct}
+        disabled={user.role === RoleDTO.ADMIN}
+      >
         <IconCart />
         Adicionar ao carrinho
       </Btn>

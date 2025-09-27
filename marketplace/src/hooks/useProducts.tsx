@@ -57,7 +57,7 @@ export const useProducts = () => {
   const searchDeferred = useDeferredValue(filter.search);
   const regexSearchDeferred = new RegExp(searchDeferred, "i");
 
-  const { data, error, isError, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () => fetcher(filter, page),
     queryKey: ["products", filter, page],
   });
@@ -73,8 +73,6 @@ export const useProducts = () => {
       ...data,
       products: productsFiltered,
     },
-    error,
-    isError,
     isLoading,
   };
 };

@@ -41,6 +41,7 @@ const fetcher = async (
     page.setPage(response.page);
     page.setLimit(response.limit);
     page.setTotal(response.total);
+
     return response;
   } catch (error) {
     console.log(error);

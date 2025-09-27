@@ -36,7 +36,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   handleChange: (value: string) => void;
 }
 
-export const PrimaryInputSearch = ({ handleChange, ...props }: InputProps) => {
+// TODO ajudtar em telas menores
+export const InputSearch = ({ handleChange, ...props }: InputProps) => {
   return (
     <InputContainer>
       <PrimaryInput

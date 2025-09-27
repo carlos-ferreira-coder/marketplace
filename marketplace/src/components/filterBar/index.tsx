@@ -6,9 +6,17 @@ import { FilterByPriority } from "./filterByPriority";
 
 const DivContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 24px;
   width: 100%;
-  align-items: start;
-  justify-content: space-between;
+
+  @media (min-width: 758px) {
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+  }
 `;
 
 export const FilterBar = () => {

@@ -10,8 +10,12 @@ const FilterList = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
   list-style: none;
+  gap: 24px;
+
+  @media (min-width: 768px) {
+    gap: 40px;
+  }
 `;
 
 const FilterItem = styled.li<FilterItemProps>`

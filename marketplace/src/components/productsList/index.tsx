@@ -10,6 +10,7 @@ const ListContainer = styled.div`
   grid-template-columns: repeat(auto-fill, 250px);
   grid-gap: 32px;
   max-width: 100%;
+  justify-content: center;
 `;
 
 export const ProductList = () => {

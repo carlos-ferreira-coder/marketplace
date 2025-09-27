@@ -46,7 +46,7 @@ const PriorityFilter = styled.ul<PriorityFilterProps>`
   z-index: 999;
 
   top: 150%;
-  right: 0;
+  right: -50%;
 
   border-radius: 4px;
   background: #ffffff;
@@ -60,6 +60,10 @@ const PriorityFilter = styled.ul<PriorityFilterProps>`
 
   li + li {
     margin-top: 4px;
+  }
+
+  @media (min-width: 758px) {
+    right: 0;
   }
 `;
 

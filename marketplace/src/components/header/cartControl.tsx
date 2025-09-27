@@ -7,6 +7,7 @@ const DivContainer = styled.div`
   cursor: pointer;
   border: none;
   background: transparent;
+  bottom: -7%;
 `;
 
 const CartCountItems = styled.span`
@@ -28,7 +29,7 @@ export const CartControl = () => {
   return (
     <DivContainer>
       <IconCart />
-      {cart && cart.items.length > 0 && (
+      {cart?.items && cart?.items.length > 0 && (
         <CartCountItems>{cart.items.length}</CartCountItems>
       )}
     </DivContainer>

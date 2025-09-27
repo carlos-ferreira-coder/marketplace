@@ -2,9 +2,10 @@
 
 import { styled } from "styled-components";
 import { Saira_Stencil_One } from "next/font/google";
-import { PrimaryInputSearch } from "./primaryInput";
+import { InputSearch } from "./inputSearch";
 import { CartControl } from "./cartControl";
 import { useFilter } from "@/hooks/useFilter";
+import { UserControl } from "./userControl";
 
 const sairaStencilOne = Saira_Stencil_One({
   weight: "400",
@@ -18,9 +19,10 @@ interface HeaderProps {
 
 const TagHeader = styled.header`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 150px;
+  padding: 20px 20px;
 
   background-color: var(--shapes);
 
@@ -29,6 +31,11 @@ const TagHeader = styled.header`
     align-items: center;
     justify-content: center;
     gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    padding: 34px 150px;
   }
 `;
 
@@ -40,6 +47,9 @@ const Logo = styled.a`
   font-size: 40px;
   font-weight: 400;
   text-decoration: none;
+
+  @media (min-width: 768px) {
+  }
 `;
 
 export const Header = ({ title }: HeaderProps) => {
@@ -49,12 +59,13 @@ export const Header = ({ title }: HeaderProps) => {
     <TagHeader>
       <Logo className={sairaStencilOne.className}>{title}</Logo>
       <div>
-        <PrimaryInputSearch
+        <InputSearch
           value={search}
           handleChange={setSearch}
           placeholder="Procurando por algo específico?"
         />
         <CartControl />
+        <UserControl />
       </div>
     </TagHeader>
   );

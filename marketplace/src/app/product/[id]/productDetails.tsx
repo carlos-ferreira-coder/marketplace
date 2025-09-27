@@ -1,4 +1,6 @@
 import { IconCart } from "@/components/icons/cart";
+import { useCartMutation } from "@/hooks/useCart";
+import { CartAddProductRequestDTO } from "@/types/dto/cart/CartAddProductRequestDTO";
 import { ProductResponseDTO } from "@/types/dto/products/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
 import styled from "styled-components";
@@ -112,7 +114,16 @@ const ProductDescription = styled.div`
 `;
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
-  const handleAddToCart = () => {};
+  const { cartAddProduct } = useCartMutation();
+
+  const handleCartAddProduct = () => {
+    const cartAddProductData: CartAddProductRequestDTO = {
+      productId: product.id,
+      quantity: 1,
+    };
+
+    cartAddProduct(cartAddProductData);
+  };
 
   return (
     <DivContainer>
@@ -133,7 +144,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </ProductDescription>
       </ProductInfo>
 
-      <Btn onClick={handleAddToCart}>
+      <Btn onClick={handleCartAddProduct}>
         <IconCart />
         Adicionar ao carrinho
       </Btn>

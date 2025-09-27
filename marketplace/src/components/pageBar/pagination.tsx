@@ -48,11 +48,16 @@ const PageItem = styled.li<PageItemProps>`
 
 export const PaginationBar = () => {
   const { page, setPage, limit, total } = usePage();
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
 
-  window.addEventListener("resize", () => {
+  useEffect(() => {
     setWindowWidth(window.innerWidth);
-  });
+
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const pagination = Pagination({ page, limit, total });
   const totalPages = Math.ceil(total / limit);
@@ -82,17 +87,11 @@ export const PaginationBar = () => {
 
       {windowWidth > 768 && (
         <>
-          <PageItem
-            disabled={page < 2}
-            onClick={() => handleChangePage(page - 1)}
-          >
+          <PageItem onClick={() => handleChangePage(page - 1)}>
             <FontAwesomeIcon icon={faAngleLeft} />
           </PageItem>
 
-          <PageItem
-            disabled={page >= totalPages}
-            onClick={() => handleChangePage(page + 1)}
-          >
+          <PageItem onClick={() => handleChangePage(page + 1)}>
             <FontAwesomeIcon icon={faAngleRight} />
           </PageItem>
         </>

@@ -6,14 +6,15 @@ import { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
-interface PriorityFilterProps {
+interface FilterListProps {
   isOpen: boolean;
 }
+
 interface FilterItemProps {
   selected?: boolean;
 }
 
-const FilterContainer = styled.div`
+const DivContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
@@ -39,7 +40,7 @@ const FilterContainer = styled.div`
   }
 `;
 
-const PriorityFilter = styled.ul<PriorityFilterProps>`
+const FilterList = styled.ul<FilterListProps>`
   position: absolute;
   padding: 12px 16px;
   width: 200px;
@@ -50,7 +51,7 @@ const PriorityFilter = styled.ul<PriorityFilterProps>`
 
   border-radius: 4px;
   background: #ffffff;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
 
   transition: opacity 0.2s ease, transform 0.2s ease;
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
@@ -104,7 +105,7 @@ export const FilterByPriority = () => {
   }, []);
 
   return (
-    <FilterContainer ref={containerRef}>
+    <DivContainer ref={containerRef}>
       <button onClick={handleOpen}>
         Organizar por
         {isOpen ? (
@@ -115,20 +116,20 @@ export const FilterByPriority = () => {
       </button>
 
       {isOpen && (
-        <PriorityFilter isOpen={isOpen}>
+        <FilterList isOpen={isOpen}>
           {Object.values(FilterPriority)
             .filter((key) => typeof key === "number")
             .map((p) => (
               <FilterItem
                 key={p}
-                onClick={() => handleUpdatePriority(p)}
                 selected={priority === p}
+                onClick={() => handleUpdatePriority(p)}
               >
                 {FilterPriorityLabels[p]}
               </FilterItem>
             ))}
-        </PriorityFilter>
+        </FilterList>
       )}
-    </FilterContainer>
+    </DivContainer>
   );
 };

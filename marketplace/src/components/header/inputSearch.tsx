@@ -4,7 +4,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const PrimaryInput = styled.input`
-  width: 350px;
+  width: 150px;
   border: none;
   border-radius: 8px;
   padding: 10px 16px;
@@ -16,11 +16,15 @@ export const PrimaryInput = styled.input`
   font-size: 14px;
   line-height: 22px;
   color: var(--text-dark);
+
+  @media (min-width: 1024px) {
+    width: 350px;
+  }
 `;
 
 const InputContainer = styled.div`
   position: relative;
-  width: 350px;
+  width: 150px;
 
   svg {
     position: absolute;
@@ -28,6 +32,10 @@ const InputContainer = styled.div`
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-dark);
+  }
+
+  @media (min-width: 1024px) {
+    width: 350px;
   }
 `;
 

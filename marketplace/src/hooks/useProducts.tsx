@@ -38,6 +38,13 @@ const fetcher = async (
       `/products?${params}`
     );
 
+    // TODO remover production
+    function sleep(ms: number) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+    await sleep(500);
+    console.log("Executado depois de 5 segundos");
+
     page.setPage(response.page);
     page.setLimit(response.limit);
     page.setTotal(response.total);

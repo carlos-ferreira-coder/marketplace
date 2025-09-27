@@ -6,6 +6,7 @@ import { InputSearch } from "./inputSearch";
 import { CartControl } from "./cartControl";
 import { useFilter } from "@/hooks/useFilter";
 import { UserControl } from "./userControl";
+import { useEffect, useState } from "react";
 
 const sairaStencilOne = Saira_Stencil_One({
   weight: "400",
@@ -47,13 +48,20 @@ const Logo = styled.a`
   font-size: 40px;
   font-weight: 400;
   text-decoration: none;
-
-  @media (min-width: 768px) {
-  }
 `;
 
 export const Header = ({ title }: HeaderProps) => {
   const { search, setSearch } = useFilter();
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <TagHeader>
@@ -62,7 +70,9 @@ export const Header = ({ title }: HeaderProps) => {
         <InputSearch
           value={search}
           handleChange={setSearch}
-          placeholder="Procurando por algo específico?"
+          placeholder={
+            windowWidth < 1024 ? "Buscar..." : "Procurando por algo específico?"
+          }
         />
         <CartControl />
         <UserControl />

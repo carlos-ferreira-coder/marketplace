@@ -1,42 +1,51 @@
 import { useAuth } from "@/hooks/useAuth";
-import { RoleDTO } from "@/types/dto/user/roleDTO";
-import { faUser, faUserTie } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { IconUser } from "../icons/userSvg";
+
+interface UserControlListProps {
+  isOpen: boolean;
+}
+
+interface UserControlItemProps {
+  selected?: boolean;
+}
 
 const DivContainer = styled.div`
-  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  position: relative;
 
   button {
     border: none;
     cursor: pointer;
-
     background: transparent;
+
     color: var(--text-dark);
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    svg {
+      width: 23px;
+      height: 23px;
+    }
   }
 `;
 
-interface UserControlDropdownProps {
-  isOpen: boolean;
-}
-
-const UserControlDropdown = styled.ul<UserControlDropdownProps>`
+const UserControlList = styled.ul<UserControlListProps>`
   position: absolute;
   padding: 12px 16px;
   width: 200px;
   z-index: 999;
 
-  top: 150%;
+  top: 175%;
   right: -50%;
 
   border-radius: 4px;
   background: #ffffff;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
 
   transition: opacity 0.2s ease, transform 0.2s ease;
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
@@ -52,10 +61,6 @@ const UserControlDropdown = styled.ul<UserControlDropdownProps>`
     right: 0;
   }
 `;
-
-interface UserControlItemProps {
-  selected?: boolean;
-}
 
 const UserControlItem = styled.li<UserControlItemProps>`
   font-family: inherit;
@@ -91,17 +96,22 @@ export const UserControl = () => {
   return (
     <DivContainer ref={containerRef}>
       <button onClick={handleOpen}>
-        <FontAwesomeIcon
-          icon={user.role === RoleDTO.ADMIN ? faUserTie : faUser}
-        />
+        <IconUser />
       </button>
 
-      {isOpen && (
-        <UserControlDropdown isOpen={isOpen}>
-          <UserControlItem onClick={() => {}}>login</UserControlItem>
-          <UserControlItem onClick={() => {}}>sair</UserControlItem>
-        </UserControlDropdown>
-      )}
+      {
+        // TODO ITEMS
+        isOpen && (
+          <UserControlList isOpen={isOpen}>
+            <UserControlItem selected={true} onClick={() => {}}>
+              login
+            </UserControlItem>
+            <UserControlItem selected={false} onClick={() => {}}>
+              sair
+            </UserControlItem>
+          </UserControlList>
+        )
+      }
     </DivContainer>
   );
 };

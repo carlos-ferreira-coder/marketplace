@@ -7,7 +7,7 @@ const DivContainer = styled.div`
   cursor: pointer;
   border: none;
   background: transparent;
-  bottom: -7%;
+  top: 3px;
 `;
 
 const CartCountItems = styled.span`

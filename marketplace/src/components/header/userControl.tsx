@@ -21,11 +21,11 @@ const DivContainer = styled.div`
   }
 `;
 
-interface UserControlProps {
+interface UserControlDropdownProps {
   isOpen: boolean;
 }
 
-const UserControlDropdown = styled.ul<UserControlProps>`
+const UserControlDropdown = styled.ul<UserControlDropdownProps>`
   position: absolute;
   padding: 12px 16px;
   width: 200px;

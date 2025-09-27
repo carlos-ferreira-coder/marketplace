@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePage } from "@/hooks/usePage";
+import { useEffect, useState } from "react";
 
 interface PageItemProps {
   selected?: boolean;
@@ -47,6 +48,11 @@ const PageItem = styled.li<PageItemProps>`
 
 export const PaginationBar = () => {
   const { page, setPage, limit, total } = usePage();
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+
+  window.addEventListener("resize", () => {
+    setWindowWidth(window.innerWidth);
+  });
 
   const pagination = Pagination({ page, limit, total });
   const totalPages = Math.ceil(total / limit);
@@ -59,11 +65,7 @@ export const PaginationBar = () => {
   return (
     <PageList>
       {pagination.map((item, idx) =>
-        item.type === "ellipsis" ? (
-          <PageItem key={`ellipsis-${idx}`} disabled>
-            <FontAwesomeIcon icon={faEllipsis} />
-          </PageItem>
-        ) : (
+        item.type === "page" ? (
           <PageItem
             key={`page-${item.value}`}
             selected={item.active}
@@ -71,19 +73,30 @@ export const PaginationBar = () => {
           >
             {item.value}
           </PageItem>
+        ) : (
+          <PageItem key={`ellipsis-${idx}`} disabled>
+            <FontAwesomeIcon icon={faEllipsis} />
+          </PageItem>
         )
       )}
 
-      <PageItem disabled={page < 2} onClick={() => handleChangePage(page - 1)}>
-        <FontAwesomeIcon icon={faAngleLeft} />
-      </PageItem>
+      {windowWidth > 768 && (
+        <>
+          <PageItem
+            disabled={page < 2}
+            onClick={() => handleChangePage(page - 1)}
+          >
+            <FontAwesomeIcon icon={faAngleLeft} />
+          </PageItem>
 
-      <PageItem
-        disabled={page >= totalPages}
-        onClick={() => handleChangePage(page + 1)}
-      >
-        <FontAwesomeIcon icon={faAngleRight} />
-      </PageItem>
+          <PageItem
+            disabled={page >= totalPages}
+            onClick={() => handleChangePage(page + 1)}
+          >
+            <FontAwesomeIcon icon={faAngleRight} />
+          </PageItem>
+        </>
+      )}
     </PageList>
   );
 };

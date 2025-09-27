@@ -106,7 +106,7 @@ export const FilterByPriority = () => {
   return (
     <FilterContainer ref={containerRef}>
       <button onClick={handleOpen}>
-        Organizar por{" "}
+        Organizar por
         {isOpen ? (
           <FontAwesomeIcon icon={faAngleUp} />
         ) : (

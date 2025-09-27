@@ -1,19 +1,30 @@
 "use client";
 
 import { FilterBar } from "@/components/filterBar";
-import styles from "./page.module.css";
 import { PageBar } from "@/components/pageBar";
 import { ProductList } from "@/components/productsList";
+import styled from "styled-components";
+
+const PageWrapper = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 24px;
+  min-height: 100vh;
+  gap: 32px;
+
+  @media (min-width: 768px) {
+    padding: 34px 150px;
+  }
+`;
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <FilterBar />
-        <PageBar />
-        <ProductList />
-        <PageBar />
-      </main>
-    </div>
+    <PageWrapper>
+      <FilterBar />
+      <PageBar />
+      <ProductList />
+      <PageBar />
+    </PageWrapper>
   );
 }

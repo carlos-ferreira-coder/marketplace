@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { Pagination } from "@/hooks/usePagination";
 import {
   faAngleLeft,
@@ -47,6 +47,7 @@ const PageItem = styled.li<PageItemProps>`
 `;
 
 export const PaginationBar = () => {
+  const theme = useTheme();
   const { page, setPage, limit, total } = usePage();
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
@@ -85,7 +86,7 @@ export const PaginationBar = () => {
         )
       )}
 
-      {windowWidth > 768 && (
+      {windowWidth > parseInt(theme.breakpoint.md) && (
         <>
           <PageItem onClick={() => handleChangePage(page - 1)}>
             <FontAwesomeIcon icon={faAngleLeft} />

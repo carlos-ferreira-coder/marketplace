@@ -13,7 +13,7 @@ const FilterList = styled.ul`
   list-style: none;
   gap: 24px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     gap: 40px;
   }
 `;

@@ -3,7 +3,7 @@ import { Saira } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header/index";
 import { Slide, ToastContainer } from "react-toastify";
-import { ClientProviders } from "@/components/clientProvider";
+import { DefaultProviders } from "@/components/defaultProvider";
 
 const saira = Saira({
   subsets: ["latin"],
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={saira.className}>
-        <ClientProviders>
+        <DefaultProviders>
           <Header title="marketplace" />
           {children}
           <ToastContainer
@@ -40,7 +40,7 @@ export default function RootLayout({
             theme="light"
             transition={Slide}
           />
-        </ClientProviders>
+        </DefaultProviders>
       </body>
     </html>
   );

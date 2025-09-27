@@ -9,7 +9,7 @@ const DivContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     align-items: start;
     justify-content: flex-end;
   }

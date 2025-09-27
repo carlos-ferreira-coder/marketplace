@@ -63,7 +63,7 @@ const FilterList = styled.ul<FilterListProps>`
     margin-top: 4px;
   }
 
-  @media (min-width: 758px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     right: 0;
   }
 `;

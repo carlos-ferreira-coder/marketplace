@@ -1,6 +1,6 @@
 "use client";
 
-import { styled } from "styled-components";
+import { styled, useTheme } from "styled-components";
 import { Saira_Stencil_One } from "next/font/google";
 import { InputSearch } from "./inputSearch";
 import { CartControl } from "./cartControl";
@@ -34,7 +34,7 @@ const TagHeader = styled.header`
     gap: 20px;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     flex-direction: row;
     padding: 34px 150px;
   }
@@ -51,6 +51,7 @@ const Logo = styled.a`
 `;
 
 export const Header = ({ title }: HeaderProps) => {
+  const theme = useTheme();
   const { search, setSearch } = useFilter();
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
@@ -71,7 +72,9 @@ export const Header = ({ title }: HeaderProps) => {
           value={search}
           handleChange={setSearch}
           placeholder={
-            windowWidth < 1024 ? "Buscar..." : "Procurando por algo específico?"
+            windowWidth < parseInt(theme.breakpoint.xl)
+              ? "Buscar..."
+              : "Procurando por algo específico?"
           }
         />
         <CartControl />

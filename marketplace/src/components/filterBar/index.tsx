@@ -12,7 +12,7 @@ const DivContainer = styled.div`
   gap: 24px;
   width: 100%;
 
-  @media (min-width: 758px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     flex-direction: row;
     align-items: start;
     justify-content: space-between;

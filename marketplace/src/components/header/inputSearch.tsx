@@ -17,7 +17,7 @@ export const PrimaryInput = styled.input`
   line-height: 22px;
   color: var(--text-dark);
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.xl}) {
     width: 350px;
   }
 `;
@@ -34,7 +34,7 @@ const InputContainer = styled.div`
     color: var(--text-dark);
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.xl}) {
     width: 350px;
   }
 `;

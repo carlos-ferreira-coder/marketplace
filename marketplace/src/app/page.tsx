@@ -13,7 +13,7 @@ const PageWrapper = styled.main`
   min-height: 100vh;
   gap: 32px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     padding: 34px 150px;
   }
 `;

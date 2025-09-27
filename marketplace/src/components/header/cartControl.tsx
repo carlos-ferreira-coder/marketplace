@@ -23,12 +23,14 @@ const CartCountItems = styled.span`
 `;
 
 export const CartControl = () => {
-  const { cart } = useCart();
+  const { data: cart } = useCart();
 
   return (
     <DivContainer>
       <IconCart />
-      {cart && <CartCountItems>{cart.quantity}</CartCountItems>}
+      {cart && cart.items.length > 0 && (
+        <CartCountItems>{cart.items.length}</CartCountItems>
+      )}
     </DivContainer>
   );
 };

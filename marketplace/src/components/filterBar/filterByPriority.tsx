@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useFilter } from "@/hooks/useFilter";
-import { FilterPriority, FilterPriorityLabels } from "@/types/FilterPriority";
+import { FilterPriority, FilterPriorityLabels } from "@/types/filterPriority";
 import { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
@@ -113,7 +113,7 @@ export const FilterByPriority = () => {
       {isOpen && (
         <PriorityFilter isOpen={isOpen}>
           {Object.values(FilterPriority)
-            .filter((key) => typeof key === "number") // evita duplicar porque TS enum gera keys numéricas e string
+            .filter((key) => typeof key === "number")
             .map((p) => (
               <FilterItem
                 key={p}

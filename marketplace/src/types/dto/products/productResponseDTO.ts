@@ -4,4 +4,6 @@ export interface ProductResponseDTO {
   description: string;
   imageUrl: string;
   price: number;
+  createdAt: string;
+  updatedAt: string;
 }

@@ -1,22 +1,16 @@
 "use client";
 
-import { FilterPriority } from "@/types/FilterPriority";
-import { FilterType } from "@/types/FilterType";
+import { FilterPriority } from "@/types/filterPriority";
+import { FilterType } from "@/types/filterType";
 import { ReactNode, createContext, useState } from "react";
 
-export interface FilterContextType {
-  page: number;
-  limit: number;
-  total: number;
+export interface FilterContextsProps {
   search: string;
   type: FilterType;
   priority: FilterPriority;
   name: string | null;
   description: string | null;
   price: number | null;
-  setPage: (page: number) => void;
-  setLimit: (limit: number) => void;
-  setTotal: (total: number) => void;
   setSearch: (search: string) => void;
   setType: (type: FilterType) => void;
   setPriority: (priority: FilterPriority) => void;
@@ -25,19 +19,13 @@ export interface FilterContextType {
   setPrice: (price: number | null) => void;
 }
 
-export const FilterContext = createContext<FilterContextType>({
-  page: 1,
-  limit: 10,
-  total: 0,
+export const FilterContexts = createContext<FilterContextsProps>({
   search: "",
   type: FilterType.ALL,
   priority: FilterPriority.NEWS,
   name: null,
   description: null,
   price: null,
-  setPage: () => {},
-  setLimit: () => {},
-  setTotal: () => {},
   setSearch: () => {},
   setType: () => {},
   setPriority: () => {},
@@ -46,16 +34,13 @@ export const FilterContext = createContext<FilterContextType>({
   setPrice: () => {},
 });
 
-interface FilterContextProviderProps {
+interface FilterContextsProviderProps {
   children: ReactNode;
 }
 
-export function FilterContextProvider({
+export const FilterContextsProvider = ({
   children,
-}: FilterContextProviderProps) {
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [total, setTotal] = useState<number>(0);
+}: FilterContextsProviderProps) => {
   const [search, setSearch] = useState<string>("");
   const [type, setType] = useState<FilterType>(FilterType.ALL);
   const [priority, setPriority] = useState<FilterPriority>(FilterPriority.NEWS);
@@ -64,20 +49,14 @@ export function FilterContextProvider({
   const [price, setPrice] = useState<number | null>(null);
 
   return (
-    <FilterContext.Provider
+    <FilterContexts.Provider
       value={{
-        page,
-        limit,
-        total,
         search,
         type,
         priority,
         name,
         description,
         price,
-        setPage,
-        setLimit,
-        setTotal,
         setSearch,
         setType,
         setPriority,
@@ -87,6 +66,6 @@ export function FilterContextProvider({
       }}
     >
       {children}
-    </FilterContext.Provider>
+    </FilterContexts.Provider>
   );
-}
+};

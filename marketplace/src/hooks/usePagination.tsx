@@ -11,7 +11,6 @@ interface PaginationProps {
   siblings?: number;
 }
 
-// TODO Refact for less items
 export const Pagination = ({
   page,
   limit,

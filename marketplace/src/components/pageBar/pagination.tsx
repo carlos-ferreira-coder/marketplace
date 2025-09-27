@@ -1,4 +1,3 @@
-import { useFilter } from "@/hooks/useFilter";
 import styled from "styled-components";
 import { Pagination } from "@/hooks/usePagination";
 import {
@@ -7,6 +6,7 @@ import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { usePage } from "@/hooks/usePage";
 
 interface PageItemProps {
   selected?: boolean;
@@ -46,7 +46,7 @@ const PageItem = styled.li<PageItemProps>`
 `;
 
 export const PaginationBar = () => {
-  const { page, setPage, limit, total } = useFilter();
+  const { page, setPage, limit, total } = usePage();
 
   const pagination = Pagination({ page, limit, total });
   const totalPages = Math.ceil(total / limit);

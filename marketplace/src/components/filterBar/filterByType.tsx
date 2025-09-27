@@ -1,5 +1,5 @@
 import { useFilter } from "@/hooks/useFilter";
-import { FilterType, FilterTypeLabels } from "@/types/FilterType";
+import { FilterType, FilterTypeLabels } from "@/types/filterType";
 import styled from "styled-components";
 
 interface FilterItemProps {
@@ -39,7 +39,7 @@ export const FilterByType = () => {
   return (
     <FilterList>
       {Object.values(FilterType)
-        .filter((key) => typeof key === "number") // evita duplicar porque TS enum gera keys numéricas e string
+        .filter((key) => typeof key === "number")
         .map((t) => (
           <FilterItem
             key={t}

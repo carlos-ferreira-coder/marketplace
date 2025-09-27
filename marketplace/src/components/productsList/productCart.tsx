@@ -1,4 +1,4 @@
-import { ProductResponseDTO } from "@/types/dto/products/ProductResponseDTO";
+import { ProductResponseDTO } from "@/types/dto/products/productResponseDTO";
 import { numberToBrl } from "@/utils/formatPrice";
 import styled from "styled-components";
 

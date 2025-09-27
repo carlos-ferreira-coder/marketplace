@@ -19,7 +19,7 @@ export const ProductList = () => {
 
   return (
     <ListContainer>
-      {data?.products.map((product) => (
+      {data?.products?.map((product) => (
         <ProductCard key={product.id} {...product} />
       ))}
     </ListContainer>

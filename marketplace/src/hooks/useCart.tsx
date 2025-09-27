@@ -1,27 +1,26 @@
 import { api } from "@/services/axios";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { CartResponseDTO } from "@/types/dto/cart/cartResponseDTO";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "./useAuth";
 
-// TODO all
-interface CartProps {
-  quantity: number;
-}
+const fetcher = async (token: string): Promise<CartResponseDTO> => {
+  const { data: response } = await api.get<CartResponseDTO>("/cart", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+};
 
 export const useCart = () => {
-  const [cart, setCart] = useState<null | CartProps>(null);
+  const { token } = useAuth();
 
-  const update = async () => {
-    await api
-      .get("/cart")
-      .then((response) => {
-        setCart(response.data);
-      })
-      .catch((error) => {
-        setCart(null);
-        console.error(error);
-        toast.error("Error fetching cart");
-      });
-  };
+  const { data, error, isError, isLoading } = useQuery<CartResponseDTO, Error>({
+    queryFn: () => fetcher(token!),
+    queryKey: ["cart"],
+    enabled: !!token,
+  });
 
-  return { cart, update };
+  return { data, error, isError, isLoading };
 };

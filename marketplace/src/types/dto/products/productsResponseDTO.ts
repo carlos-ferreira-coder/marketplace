@@ -1,4 +1,4 @@
-import { ProductResponseDTO } from "./ProductResponseDTO";
+import { ProductResponseDTO } from "./productResponseDTO";
 
 export interface ProductsResponseDTO {
   page: number;

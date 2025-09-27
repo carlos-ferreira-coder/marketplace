@@ -1,6 +1,6 @@
 import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
-import { IconCart } from "../icons/cartSvg";
+import { IconCart } from "../icons/cart";
 
 const DivContainer = styled.div`
   position: relative;

@@ -3,7 +3,7 @@ import { Saira } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header/index";
 import { Slide, ToastContainer } from "react-toastify";
-import { DefaultProviders } from "@/components/defaultProvider";
+import { DefaultProviders } from "@/components/default/defaultProvider";
 
 const saira = Saira({
   subsets: ["latin"],

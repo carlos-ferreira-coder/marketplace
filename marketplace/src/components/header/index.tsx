@@ -7,6 +7,9 @@ import { CartControl } from "./cartControl";
 import { useFilter } from "@/hooks/useFilter";
 import { UserControl } from "./userControl";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { RoleDTO } from "@/types/dto/user/roleDTO";
+import { useRouter } from "next/navigation";
 
 const sairaStencilOne = Saira_Stencil_One({
   weight: "400",
@@ -40,7 +43,6 @@ const TagHeader = styled.header`
   }
 `;
 
-// TODO Adicionar link para home
 const Logo = styled.a`
   cursor: pointer;
   color: var(--logo-color);
@@ -52,6 +54,8 @@ const Logo = styled.a`
 
 export const Header = ({ title }: HeaderProps) => {
   const theme = useTheme();
+  const user = useAuth();
+  const router = useRouter();
   const { search, setSearch } = useFilter();
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
@@ -64,9 +68,18 @@ export const Header = ({ title }: HeaderProps) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleNavigate = (navigate: string) => {
+    router.push(navigate);
+  };
+
   return (
     <TagHeader>
-      <Logo className={sairaStencilOne.className}>{title}</Logo>
+      <Logo
+        className={sairaStencilOne.className}
+        onClick={() => handleNavigate("/")}
+      >
+        {title}
+      </Logo>
       <div>
         <InputSearch
           value={search}
@@ -77,7 +90,7 @@ export const Header = ({ title }: HeaderProps) => {
               : "Procurando por algo específico?"
           }
         />
-        <CartControl />
+        {user.role !== RoleDTO.ADMIN && <CartControl />}
         <UserControl />
       </div>
     </TagHeader>

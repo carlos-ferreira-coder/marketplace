@@ -1,5 +1,6 @@
 import { ProductResponseDTO } from "@/types/dto/products/productResponseDTO";
-import { numberToBrl } from "@/utils/formatPrice";
+import { numberToBrl } from "@/utils/numberToBrl";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const Card = styled.div`
@@ -7,6 +8,7 @@ const Card = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  cursor: pointer;
 
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(20px);
@@ -52,9 +54,20 @@ const Card = styled.div`
 `;
 
 // TODO next/image for otimization
-export const ProductCard = ({ name, imageUrl, price }: ProductResponseDTO) => {
+export const ProductCard = ({
+  id,
+  name,
+  imageUrl,
+  price,
+}: ProductResponseDTO) => {
+  const router = useRouter();
+
+  const handleNavigate = () => {
+    router.push(`/product/${id}`);
+  };
+
   return (
-    <Card>
+    <Card onClick={handleNavigate}>
       <img src={imageUrl} alt={name} />
       <div>
         <h3>{name}</h3>

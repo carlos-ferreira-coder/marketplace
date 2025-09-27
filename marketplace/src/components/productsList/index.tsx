@@ -14,13 +14,13 @@ const ListContainer = styled.div`
 `;
 
 export const ProductList = () => {
-  const { data, isLoading } = useProducts();
+  const { data: products, isLoading } = useProducts();
 
   if (isLoading) return <Loader icon={IconLoader.spinner} />;
 
   return (
     <ListContainer>
-      {data?.products?.map((product) => (
+      {products?.products?.map((product) => (
         <ProductCard key={product.id} {...product} />
       ))}
     </ListContainer>

@@ -4,9 +4,10 @@ import { BackBtn } from "@/components/backButton";
 import { DefaultLayout } from "@/components/default/defaultLayout";
 import { IconLoader, Loader } from "@/components/loader";
 import { useProduct } from "@/hooks/useProduct";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import styled from "styled-components";
 import { ProductDetails } from "./productDetails";
+import axios from "axios";
 
 const DivContainer = styled.div`
   display: flex;
@@ -42,21 +43,37 @@ const SectionContainer = styled.section`
 `;
 
 export default function Product() {
+  const router = useRouter();
   const params = useParams<{ id: string }>();
-  const { data: product, isLoading } = useProduct(params.id);
+  const { product, error, isLoading } = useProduct(params.id);
 
   if (isLoading) return <Loader icon={IconLoader.spinner} />;
-  if (!product) return <Loader icon={IconLoader.spinner} />;
+
+  if (error) {
+    let params = new URLSearchParams({
+      "error-msg": "Erro ao buscar o produto!",
+    });
+
+    if (axios.isAxiosError(error) && error.response) {
+      params = new URLSearchParams({
+        "error-msg": "Produto não encontrado!",
+      });
+    }
+
+    router.push(`/?${params}`);
+  }
 
   return (
     <DefaultLayout>
-      <DivContainer>
-        <BackBtn navigate="/" />
-        <SectionContainer>
-          <img src={product.imageUrl} />
-          <ProductDetails product={product} />
-        </SectionContainer>
-      </DivContainer>
+      {product && (
+        <DivContainer>
+          <BackBtn navigate="/" />
+          <SectionContainer>
+            <img src={product.imageUrl} />
+            <ProductDetails product={product} />
+          </SectionContainer>
+        </DivContainer>
+      )}
     </DefaultLayout>
   );
 }

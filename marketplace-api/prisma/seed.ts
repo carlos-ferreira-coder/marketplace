@@ -36,19 +36,19 @@ async function main() {
         {
           name: 'Calça Básica',
           description: 'Calça 100% algodão, tamanho M',
-          imageUrl: 'pants1.webp',
+          imageUrl: 'pants1.jpg',
           price: 229.9,
         },
         {
           name: 'Calça Street',
           description: 'Calça jogger, tamanho G',
-          imageUrl: 'pants2.webp',
+          imageUrl: 'pants2.jpg',
           price: 179.9,
         },
         {
           name: 'Tênis Feminino',
           description: 'Tênis feminino, tamanho 35',
-          imageUrl: 'shoes1.webp',
+          imageUrl: 'shoes1.jpg',
           price: 199.9,
         },
         {

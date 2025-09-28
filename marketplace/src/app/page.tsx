@@ -4,6 +4,8 @@ import { DefaultLayout } from "@/components/default/defaultLayout";
 import { FilterBar } from "@/components/filterBar";
 import { PageBar } from "@/components/pageBar";
 import { ProductList } from "@/components/productsList";
+import { searchParamsMsg } from "@/utils/msg";
+import { useSearchParams } from "next/navigation";
 import styled from "styled-components";
 
 const PageWrapper = styled.main`
@@ -14,6 +16,9 @@ const PageWrapper = styled.main`
 `;
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  searchParamsMsg(searchParams);
+
   return (
     <DefaultLayout>
       <PageWrapper>

@@ -2,6 +2,7 @@ import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
 import { IconCart } from "../icons/cart";
 import { useRouter } from "next/navigation";
+import { CartResponseDTO } from "@/types/dto/cart/cartResponseDTO";
 
 const DivContainer = styled.div`
   position: relative;
@@ -27,19 +28,21 @@ const CartCountItems = styled.span`
 `;
 
 export const CartControl = () => {
+  const { cart } = useCart();
   const router = useRouter();
-  const { data: cart } = useCart();
 
   const handleNavigate = () => {
     router.push("/cart");
   };
 
   return (
-    <DivContainer onClick={handleNavigate}>
-      <IconCart />
-      {cart?.items && cart?.items.length > 0 && (
-        <CartCountItems>{cart.items.length}</CartCountItems>
-      )}
-    </DivContainer>
+    cart && (
+      <DivContainer onClick={handleNavigate}>
+        <IconCart />
+        {cart?.items && cart?.items.length > 0 && (
+          <CartCountItems>{cart.items.length}</CartCountItems>
+        )}
+      </DivContainer>
+    )
   );
 };

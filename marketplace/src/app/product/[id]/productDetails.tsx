@@ -1,11 +1,11 @@
 import { IconCart } from "@/components/icons/cart";
-import { useAuth } from "@/hooks/useAuth";
-import { useCartMutation } from "@/hooks/useCart";
+import { useCart, useCartMutation } from "@/hooks/useCart";
 import { CartAddProductRequestDTO } from "@/types/dto/cart/cartAddProductRequestDTO";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
-import { RoleDTO } from "@/types/dto/user/roleDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
+import axios from "axios";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 
 interface ProductDetailsProps {
@@ -117,8 +117,8 @@ const ProductDescription = styled.div`
 `;
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
-  const user = useAuth();
   const router = useRouter();
+  const { cart } = useCart();
   const { cartAddProduct } = useCartMutation();
 
   const handleCartAddProduct = () => {
@@ -127,10 +127,28 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
       quantity: 1,
     };
 
-    cartAddProduct(cartAddProductData);
+    cartAddProduct(cartAddProductData, {
+      onSuccess: () => {
+        const params = new URLSearchParams({
+          "success-msg": `${product.name} inserido(a) no carrinho!`,
+        });
 
-    const msg = new URLSearchParams(`${product.name} inserido(a) no carrinho!`);
-    router.push(`/cart?success-msg=${msg}`);
+        router.push(`/cart?${params.toString()}`);
+      },
+      onError: (error: unknown) => {
+        if (axios.isAxiosError(error) && error.response) {
+          const params = new URLSearchParams({
+            "error-msg": "Não autorizado!",
+          });
+
+          router.push(`/cart?${params.toString()}`);
+          router.push(`/auth/login?${params}`);
+        }
+
+        console.log(error);
+        toast.error("Erro ao adicionar produto no carrinho!");
+      },
+    });
   };
 
   return (
@@ -152,10 +170,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </ProductDescription>
       </ProductInfo>
 
-      <Btn
-        onClick={handleCartAddProduct}
-        disabled={user.role === RoleDTO.ADMIN}
-      >
+      <Btn onClick={handleCartAddProduct} disabled={!cart}>
         <IconCart />
         Adicionar ao carrinho
       </Btn>

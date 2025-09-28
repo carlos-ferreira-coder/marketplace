@@ -11,24 +11,16 @@ import { UpdateProductResponseDTO } from "@/types/dto/product/updateProductRespo
 import { DeleteProductRequestDTO } from "@/types/dto/product/deleteProductRequestDTO";
 import { DeleteProductResponseDTO } from "@/types/dto/product/deleteProductResponseDTO";
 
-const fetcher = async (id: string): Promise<ProductResponseDTO | void> => {
-  try {
-    const { data: response } = await api.get<ProductResponseDTO>(
-      `/products/${id}`
-    );
+const fetcher = async (id: string): Promise<ProductResponseDTO> => {
+  const { data: response } = await api.get<ProductResponseDTO>(
+    `/products/${id}`
+  );
 
-    // TODO remover in production
-    function sleep(ms: number) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-    await sleep(500);
-    console.log("Executado depois de 5 segundos");
+  // TODO remover in production
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  console.log("Executado depois de 5 segundos");
 
-    return response;
-  } catch (error) {
-    console.log(error);
-    toast.error("Error fetching products");
-  }
+  return response;
 };
 
 const createProductFn = async (
@@ -155,13 +147,15 @@ const deleteProductFn = async (
 };
 
 export const useProduct = (id: string) => {
-  const { data, isLoading } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryFn: () => fetcher(id),
     queryKey: ["product", id],
     enabled: !!id,
+    staleTime: 1000 * 60 * 10, // 10min
   });
 
-  return { data, isLoading };
+  const product = data || null;
+  return { product, error, isLoading };
 };
 
 export const useProductMutation = () => {

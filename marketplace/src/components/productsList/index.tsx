@@ -4,6 +4,7 @@ import { useProducts } from "@/hooks/useProducts";
 import { ProductCard } from "./productCart";
 import styled from "styled-components";
 import { IconLoader, Loader } from "../loader";
+import { toast } from "react-toastify";
 
 const ListContainer = styled.div`
   display: grid;
@@ -14,7 +15,9 @@ const ListContainer = styled.div`
 `;
 
 export const ProductList = () => {
-  const { data: products, isLoading } = useProducts();
+  const { products, error, isLoading } = useProducts();
+
+  if (error) toast.error("Erro ao buscar os produtos!");
 
   if (isLoading) return <Loader icon={IconLoader.spinner} />;
 

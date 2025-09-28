@@ -33,6 +33,12 @@ https://www.figma.com/design/rET9F2CeUEJdiVN7JRu993/E-commerce---capputeeno?node
 
 Criar um arquivo `.env`:
 
+```
+cd marketplace-api
+echo "seu-env-aqui" > .env
+cd ..
+```
+
 ```env
 # Database
 DATABASE_URL="postgresql://postgres:docker@db:5432/marketplace_db"
@@ -51,6 +57,12 @@ BASE_URL="http://localhost:3000"
 
 Criar um arquivo `.env`:
 
+```
+cd marketplace
+echo "seu-env-aqui" > .env
+cd ..
+```
+
 ```env
 # Application
 NEXT_PUBLIC_API_URL="http://localhost:3000"
@@ -58,13 +70,7 @@ NEXT_PUBLIC_API_URL="http://localhost:3000"
 
 Como Executar o Projeto
 
-### Build da aplicação
-
-```
-docker compose up -d --build
-```
-
-### Ambiente de desenvolvimento
+### Instalar dependências
 
 ```
 cd marketplace
@@ -79,5 +85,22 @@ npm install
 
 cd ..
 
+```
+
+### Build da aplicação
+
+```
+docker compose up -d --build
+```
+
+### Parar aplicação
+
+```
+docker compose down
+```
+
+### Inicar a aplicação após build
+
+```
 docker compose up -d
 ```

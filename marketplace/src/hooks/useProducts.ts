@@ -2,7 +2,6 @@ import { api } from "@/services/axios";
 import { ProductsResponseDTO } from "@/types/dto/product/productsResponseDTO";
 import { useQuery } from "@tanstack/react-query";
 import { useFilter } from "./useFilter";
-import { toast } from "react-toastify";
 import { useDeferredValue } from "react";
 import { usePage } from "./usePage";
 import { FilterContextsProps } from "@/contexts/filterContexts";
@@ -30,30 +29,22 @@ const mountParams = (filter: FilterContextsProps, page: PageContextsProps) => {
 const fetcher = async (
   filter: FilterContextsProps,
   page: PageContextsProps
-): Promise<ProductsResponseDTO | void> => {
-  try {
-    const params = mountParams(filter, page);
+): Promise<ProductsResponseDTO> => {
+  const params = mountParams(filter, page);
 
-    const { data: response } = await api.get<ProductsResponseDTO>(
-      `/products?${params}`
-    );
+  const { data: response } = await api.get<ProductsResponseDTO>(
+    `/products?${params}`
+  );
 
-    // TODO remover in production
-    function sleep(ms: number) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-    await sleep(500);
-    console.log("Executado depois de 5 segundos");
+  // TODO remover in production
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  console.log("Executado depois de 5 segundos");
 
-    page.setPage(response.page);
-    page.setLimit(response.limit);
-    page.setTotal(response.total);
+  page.setPage(response.page);
+  page.setLimit(response.limit);
+  page.setTotal(response.total);
 
-    return response;
-  } catch (error: unknown) {
-    console.log(error);
-    toast.error("Erro ao buscar os produtos!");
-  }
+  return response;
 };
 
 // TODO filter by (search, type, priority)
@@ -65,9 +56,10 @@ export const useProducts = () => {
   const searchDeferred = useDeferredValue(filter.search);
   const regexSearchDeferred = new RegExp(searchDeferred, "i");
 
-  const { data, isLoading } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryFn: () => fetcher(filter, page),
     queryKey: ["products", filter, page],
+    staleTime: 1000 * 60 * 10, // 10min
   });
 
   const productsFiltered = data?.products.filter(
@@ -77,10 +69,11 @@ export const useProducts = () => {
   );
 
   return {
-    data: {
+    products: {
       ...data,
-      products: productsFiltered,
+      products: productsFiltered || null,
     },
+    error,
     isLoading,
   };
 };

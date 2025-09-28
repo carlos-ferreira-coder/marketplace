@@ -10,62 +10,39 @@ import { CartRemoveProductRequestDTO } from "@/types/dto/cart/cartRemoveProductR
 import { CartRemoveProductResponseDTO } from "@/types/dto/cart/cartRemoveProductResponseDTO";
 import { CartDecreaseQuantityResponseDTO } from "@/types/dto/cart/cartDecreaseQuantityResponseDTO";
 import axios from "axios";
+import { RoleDTO } from "@/types/dto/user/roleDTO";
 
-const fetcher = async (token: string): Promise<CartResponseDTO | void> => {
-  try {
-    const { data: response } = await api.get<CartResponseDTO>("/cart", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response) {
-      const msg =
-        error.response.status === 401
-          ? "Não autorizado!"
-          : "Carrinho não encontrado!";
-      toast.error(msg);
-      throw error;
-    }
+const fetcher = async (token: string): Promise<CartResponseDTO> => {
+  const { data: response } = await api.get<CartResponseDTO>("/cart", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    console.log(error);
-    toast.error("Erro ao buscar o carrinho!");
-    throw error;
-  }
+  return response;
 };
 
 const cartAddProductFn = async (
   token: string,
   cartAddProduct: CartAddProductRequestDTO
-): Promise<CartAddProductResponseDTO | void> => {
-  try {
-    const { data: response } = await api.post<CartAddProductResponseDTO>(
-      "/cart/add-product",
-      cartAddProduct,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response) {
-      toast.error("Não autorizado!");
-      throw error;
+): Promise<CartAddProductResponseDTO> => {
+  const { data: response } = await api.post<CartAddProductResponseDTO>(
+    "/cart/add-product",
+    cartAddProduct,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
+  );
 
-    console.log(error);
-    toast.error("Erro ao adicionar produto no carrinho!");
-    throw error;
-  }
+  return response;
 };
 
 const cartRemoveProductFn = async (
   token: string,
   cartRemoveProduct: CartRemoveProductRequestDTO
-): Promise<CartRemoveProductResponseDTO | void> => {
+): Promise<CartRemoveProductResponseDTO> => {
   try {
     const { data: response } = await api.delete<CartRemoveProductResponseDTO>(
       "/cart/remove-product",
@@ -76,6 +53,7 @@ const cartRemoveProductFn = async (
         },
       }
     );
+
     return response;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
@@ -96,7 +74,7 @@ const cartRemoveProductFn = async (
 const cartDecreaseQuantityFn = async (
   token: string,
   cartDecreaseQuantity: CartDecreaseQuantityRequestDTO
-): Promise<CartDecreaseQuantityResponseDTO | void> => {
+): Promise<CartDecreaseQuantityResponseDTO> => {
   try {
     const { data: response } = await api.patch<CartDecreaseQuantityResponseDTO>(
       "/cart/decrease-quantity",
@@ -107,6 +85,7 @@ const cartDecreaseQuantityFn = async (
         },
       }
     );
+
     return response;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
@@ -125,17 +104,17 @@ const cartDecreaseQuantityFn = async (
 };
 
 export const useCart = () => {
-  const { token } = useAuth();
+  const { token, role } = useAuth();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryFn: () => fetcher(token!),
     queryKey: ["cart"],
-    enabled: !!token,
+    enabled: !!token && role === RoleDTO.USER,
+    staleTime: 1000 * 60 * 30, // 30min
   });
 
-  if (error) console.log(error);
-
-  return { data, isLoading };
+  const cart = data || null;
+  return { cart, error, isLoading };
 };
 
 export const useCartMutation = () => {

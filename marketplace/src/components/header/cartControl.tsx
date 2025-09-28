@@ -2,6 +2,8 @@ import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
 import { IconCart } from "../icons/cart";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import { RoleDTO } from "@/types/dto/user/roleDTO";
 
 const DivContainer = styled.div`
   position: relative;
@@ -38,8 +40,8 @@ export const CartControl = () => {
     cart && (
       <DivContainer onClick={handleNavigate}>
         <IconCart />
-        {cart?.items && cart?.items.length > 0 && (
-          <CartCountItems>{cart.items.length}</CartCountItems>
+        {cart.totalItems > 0 && (
+          <CartCountItems>{cart.totalItems}</CartCountItems>
         )}
       </DivContainer>
     )

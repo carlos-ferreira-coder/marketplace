@@ -109,7 +109,7 @@ export const useCart = () => {
   const { data, error, isLoading } = useQuery({
     queryFn: () => fetcher(token!),
     queryKey: ["cart"],
-    enabled: !!token && role === RoleDTO.USER,
+    enabled: !!token && role === "USER",
     staleTime: 1000 * 60 * 30, // 30min
   });
 

@@ -30,9 +30,9 @@ export default function Register() {
 
   handleRegister({
     name: "test",
-    email: "test@test.com",
-    password: "123456",
+    email: "abacate@abacate.com",
+    password: "@A1b2C3d4",
     phone: "00000000000",
-    cpf: "99999999999",
+    cpf: "99999922999",
   });
 }

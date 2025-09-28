@@ -1,0 +1,44 @@
+import styled from "styled-components";
+
+interface ButtonProps {
+  background?: "info" | "success" | "delete" | "white" | "default";
+  textTransform?: string;
+}
+
+export const Button = styled.button<ButtonProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: ${(props) => {
+    switch (props.background) {
+      case "info":
+        return "var(--info-color)";
+      case "success":
+        return "var(--success-color)";
+      case "delete":
+        return "var(--delete-color)";
+      case "white":
+        return "white";
+      default:
+        return "var(--orange-low)";
+    }
+  }};
+
+  border-radius: 4px;
+  border: none;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: ${(props) => props.textTransform};
+
+  color: ${(props) =>
+    props.background !== "white" ? "white" : "var(--text-dark)"};
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+
+  &:active {
+    transform: translateY(2px);
+  }
+`;

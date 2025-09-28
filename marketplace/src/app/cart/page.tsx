@@ -118,7 +118,7 @@ export default function Cart() {
     }
 
     console.log(error);
-    router.push(`/auth/login?${params}`);
+    router.push(`/auth/login?${params.toString()}`);
   }
 
   const deliveryFee = 40;

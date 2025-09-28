@@ -1,3 +1,4 @@
+import { Button } from "@/components/button";
 import { IconCart } from "@/components/icons/cart";
 import { useCart, useCartMutation } from "@/hooks/useCart";
 import { CartAddProductRequestDTO } from "@/types/dto/cart/cartAddProductRequestDTO";
@@ -20,28 +21,6 @@ const DivContainer = styled.div`
   @media (min-width: ${(props) => props.theme.breakpoint.xl}) {
     height: 100vh;
   }
-`;
-
-const Btn = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  margin-top: 35px;
-
-  background: #115d8c;
-  mix-blend-mode: multiply;
-  border-radius: 4px;
-  border: none;
-  padding: 10px 0;
-  text-align: center;
-  font-weight: 500;
-  font-size: 16px;
-  text-transform: uppercase;
-
-  color: white;
-  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 `;
 
 const ProductInfo = styled.div`
@@ -170,10 +149,15 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </ProductDescription>
       </ProductInfo>
 
-      <Btn onClick={handleCartAddProduct}>
+      <Button
+        background="info"
+        textTransform={"uppercase"}
+        onClick={handleCartAddProduct}
+        style={{ marginTop: "35px" }}
+      >
         <IconCart />
         Adicionar ao carrinho
-      </Btn>
+      </Button>
     </DivContainer>
   );
 };

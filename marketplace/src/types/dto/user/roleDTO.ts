@@ -1,4 +1,4 @@
 export enum RoleDTO {
-  ADMIN,
-  USER,
+  ADMIN = "ADMIN",
+  USER = "USER",
 }

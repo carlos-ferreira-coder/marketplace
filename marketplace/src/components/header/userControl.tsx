@@ -2,6 +2,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { IconUser } from "../icons/user";
+import { useRouter } from "next/navigation";
+import { RoleDTO } from "@/types/dto/user/roleDTO";
 
 interface UserControlListProps {
   isOpen: boolean;
@@ -57,6 +59,14 @@ const UserControlList = styled.ul<UserControlListProps>`
     margin-top: 4px;
   }
 
+  > div {
+    width: 100%;
+    height: 1px;
+    margin: 8px 0px;
+    padding: 0px;
+    background: var(--shapes-2);
+  }
+
   @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     right: 0;
   }
@@ -74,7 +84,8 @@ const UserControlItem = styled.li<UserControlItemProps>`
 `;
 
 export const UserControl = () => {
-  const user = useAuth();
+  const auth = useAuth();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -99,19 +110,42 @@ export const UserControl = () => {
         <IconUser />
       </button>
 
-      {
-        // TODO ITEMS
-        isOpen && (
-          <UserControlList isOpen={isOpen}>
-            <UserControlItem selected={true} onClick={() => {}}>
+      {isOpen && (
+        <UserControlList isOpen={isOpen}>
+          {auth.role === "ADMIN" && (
+            <>
+              <UserControlItem
+                selected={window.location.pathname === "/product/create"}
+                onClick={() => router.push("/product/create")}
+              >
+                Cadastrar Produto
+              </UserControlItem>
+              <div></div>
+            </>
+          )}
+          <UserControlItem
+            selected={window.location.pathname === "/auth/register"}
+            onClick={() => router.push("/auth/register")}
+          >
+            cadastro
+          </UserControlItem>
+          {!auth.token ? (
+            <UserControlItem
+              selected={window.location.pathname === "/auth/login"}
+              onClick={() => router.push("/auth/login")}
+            >
               login
             </UserControlItem>
-            <UserControlItem selected={false} onClick={() => {}}>
-              sair
+          ) : (
+            <UserControlItem
+              selected={window.location.pathname === "/auth/logout"}
+              onClick={() => router.push("/auth/logout")}
+            >
+              logout
             </UserControlItem>
-          </UserControlList>
-        )
-      }
+          )}
+        </UserControlList>
+      )}
     </DivContainer>
   );
 };

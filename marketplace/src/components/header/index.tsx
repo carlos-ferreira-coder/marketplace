@@ -2,7 +2,6 @@
 
 import { styled, useTheme } from "styled-components";
 import { Saira_Stencil_One } from "next/font/google";
-import { InputSearch } from "./inputSearch";
 import { CartControl } from "./cartControl";
 import { useFilter } from "@/hooks/useFilter";
 import { UserControl } from "./userControl";
@@ -10,6 +9,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import { toast } from "react-toastify";
+import { InputIcon } from "../input";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const sairaStencilOne = Saira_Stencil_One({
   weight: "400",
@@ -84,7 +85,8 @@ export const Header = ({ title }: HeaderProps) => {
         {title}
       </Logo>
       <div>
-        <InputSearch
+        <InputIcon
+          icon={faSearch}
           value={search}
           handleChange={setSearch}
           placeholder={

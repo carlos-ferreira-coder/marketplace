@@ -5,6 +5,8 @@ import { searchParamsMsg } from "@/utils/msg";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { toast } from "react-toastify";
+import { DefaultLayout } from "@/components/default/defaultLayout";
+import { LoginForm } from "./form";
 
 export default function Login() {
   const router = useRouter();
@@ -25,11 +27,17 @@ export default function Login() {
       "success-msg": `Seja bem-vindo, ${response.data.user.name}!`,
     });
 
-    const product = searchParams.get("product");
-    if (product) {
-      router.push(`/product/${product}?${params}`);
+    const productId = searchParams.get("productId");
+    if (productId) {
+      router.push(`/product/${productId}?${params.toString()}`);
     }
 
-    router.push(`/?${params}`);
+    router.push(`/?${params.toString()}`);
   };
+
+  return (
+    <DefaultLayout>
+      <LoginForm login={handleLogin} />
+    </DefaultLayout>
+  );
 }

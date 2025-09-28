@@ -23,7 +23,7 @@ const mountParams = (filter: FilterContextsProps, page: PageContextsProps) => {
   if (filter.description) params.append("description", filter.description);
   if (filter.price) params.append("price", filter.price.toString());
 
-  return params.toString();
+  return params;
 };
 
 const fetcher = async (
@@ -33,7 +33,7 @@ const fetcher = async (
   const params = mountParams(filter, page);
 
   const { data: response } = await api.get<ProductsResponseDTO>(
-    `/products?${params}`
+    `/products?${params.toString()}`
   );
 
   // TODO remover in production

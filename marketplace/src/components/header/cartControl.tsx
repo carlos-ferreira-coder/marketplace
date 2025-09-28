@@ -2,7 +2,6 @@ import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
 import { IconCart } from "../icons/cart";
 import { useRouter } from "next/navigation";
-import { CartResponseDTO } from "@/types/dto/cart/cartResponseDTO";
 
 const DivContainer = styled.div`
   position: relative;

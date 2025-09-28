@@ -1,7 +1,6 @@
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { api } from "./axios";
 import { LoginResponseDTO } from "@/types/dto/user/loginResponseDTO";
-import { toast } from "react-toastify";
 import axios from "axios";
 import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
 import { RegisterResponseDTO } from "@/types/dto/user/registerResponseDTO";

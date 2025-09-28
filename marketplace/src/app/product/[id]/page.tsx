@@ -38,7 +38,7 @@ export default function Product() {
       });
     }
 
-    router.push(`/?${params}`);
+    router.push(`/?${params.toString()}`);
   }
 
   return (

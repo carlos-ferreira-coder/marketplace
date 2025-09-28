@@ -27,3 +27,10 @@ export const loginSchema = z.object({
       message: "A senha deve conter pelo menos um caractere especial",
     }),
 });
+
+export type loginSchemaProps = z.infer<typeof loginSchema>;
+
+export const loginDefaultValues = {
+  email: "",
+  password: "",
+};

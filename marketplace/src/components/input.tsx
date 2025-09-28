@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { InputHTMLAttributes } from "react";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export const PrimaryInput = styled.input`
   width: 150px;
@@ -40,20 +40,21 @@ const InputContainer = styled.div`
 `;
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  value: string;
-  handleChange: (value: string) => void;
+  icon: IconProp;
+  handleChange?: (value: string) => void;
 }
 
-export const InputSearch = ({ handleChange, ...props }: InputProps) => {
+export const InputIcon = ({ handleChange, icon, ...props }: InputProps) => {
   return (
     <InputContainer>
       <PrimaryInput
-        onChange={(event) => {
-          handleChange(event.target.value);
-        }}
         {...props}
+        onChange={(event) => {
+          handleChange?.(event.target.value);
+          props.onChange?.(event);
+        }}
       />
-      <FontAwesomeIcon icon={faSearch} />
+      <FontAwesomeIcon icon={icon} />
     </InputContainer>
   );
 };

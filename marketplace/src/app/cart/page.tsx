@@ -102,6 +102,8 @@ export default function Cart() {
 
   searchParamsMsg(searchParams);
 
+  console.log(`cart: ${cart}`);
+
   if (error) {
     const params = new URLSearchParams();
 

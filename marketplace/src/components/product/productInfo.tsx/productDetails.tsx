@@ -138,11 +138,11 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
       onError: (error: unknown) => {
         if (axios.isAxiosError(error)) {
           const params = new URLSearchParams({
-            product: product.id,
+            productId: product.id,
             "warning-msg": "Faça login para continuar!",
           });
 
-          router.push(`/auth/login?${params}`);
+          router.push(`/auth/login?${params.toString()}`);
         }
 
         console.log(error);

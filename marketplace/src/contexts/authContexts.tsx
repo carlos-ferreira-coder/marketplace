@@ -41,14 +41,22 @@ export const AuthContextsProvider = ({
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
+    const storedToken = localStorage.getItem("token");
     const storedName = localStorage.getItem("name");
     const storedRole = localStorage.getItem("role");
-    const storedToken = localStorage.getItem("token");
 
-    if (storedName) setName(storedName);
-    if (storedRole) setRole(JSON.parse(storedRole) as RoleDTO);
-    if (storedToken) setToken(storedToken);
-  }, [setToken]);
+    setToken(storedToken);
+    setName(storedName);
+
+    const validRoles: Record<string, RoleDTO> = {
+      ADMIN: RoleDTO.ADMIN,
+      USER: RoleDTO.USER,
+    };
+
+    setRole(
+      storedRole && validRoles[storedRole] ? validRoles[storedRole] : null
+    );
+  }, []);
 
   const register = async (
     request: RegisterRequestDTO

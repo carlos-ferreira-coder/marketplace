@@ -1,7 +1,6 @@
 import { ProductResponseDTO } from "../product/productResponseDTO";
 
-export interface ItemsResponseDTO {
+export interface CartRemoveProductResponseDTO {
+  message: string;
   product: ProductResponseDTO;
-  quantity: number;
-  itemTotal: number;
 }

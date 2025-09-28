@@ -1,7 +1,7 @@
 "use client";
 
-import { Login } from "@/services/auth";
-import { LoginRequestDTO } from "@/types/dto/login/LoginRequestDTO";
+import { loginService } from "@/services/auth";
+import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { RoleDTO } from "@/types/dto/user/roleDTO";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
@@ -9,9 +9,6 @@ export interface AuthContextsProps {
   name: string | null;
   role: RoleDTO | null;
   token: string | null;
-  setName: (name: string) => void;
-  setRole: (role: RoleDTO) => void;
-  setToken: (token: string) => void;
   login: (request: LoginRequestDTO) => Promise<void>;
   logout: () => void;
 }
@@ -20,9 +17,6 @@ export const AuthContexts = createContext<AuthContextsProps>({
   name: null,
   role: null,
   token: null,
-  setName: () => {},
-  setRole: () => {},
-  setToken: () => {},
   login: async () => {},
   logout: () => {},
 });
@@ -44,7 +38,7 @@ export const AuthContextsProvider = ({
   }, [setToken]);
 
   const login = async (request: LoginRequestDTO) => {
-    const response = await Login(request);
+    const response = await loginService(request);
 
     if (!response) return;
 
@@ -68,9 +62,7 @@ export const AuthContextsProvider = ({
   };
 
   return (
-    <AuthContexts.Provider
-      value={{ name, role, token, setName, setRole, setToken, login, logout }}
-    >
+    <AuthContexts.Provider value={{ name, role, token, login, logout }}>
       {children}
     </AuthContexts.Provider>
   );

@@ -1,4 +1,4 @@
-import { ProductResponseDTO } from "@/types/dto/products/productResponseDTO";
+import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";

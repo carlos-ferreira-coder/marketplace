@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { RoleDTO } from "@/types/dto/user/roleDTO";
 import { useRouter } from "next/navigation";
+import { useApi } from "@/hooks/useApi";
+import { toast } from "react-toastify";
 
 const sairaStencilOne = Saira_Stencil_One({
   weight: "400",
@@ -56,6 +58,8 @@ export const Header = ({ title }: HeaderProps) => {
   const theme = useTheme();
   const user = useAuth();
   const router = useRouter();
+  const api = useApi();
+
   const { search, setSearch } = useFilter();
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
@@ -67,6 +71,10 @@ export const Header = ({ title }: HeaderProps) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (api.error) toast.error("Api not responding!");
+  }, [api]);
 
   const handleNavigate = (navigate: string) => {
     router.push(navigate);

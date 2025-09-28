@@ -1,12 +1,11 @@
 import { IconCart } from "@/components/icons/cart";
 import { useAuth } from "@/hooks/useAuth";
 import { useCartMutation } from "@/hooks/useCart";
-import { CartAddProductRequestDTO } from "@/types/dto/cart/CartAddProductRequestDTO";
-import { ProductResponseDTO } from "@/types/dto/products/productResponseDTO";
+import { CartAddProductRequestDTO } from "@/types/dto/cart/cartAddProductRequestDTO";
+import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { RoleDTO } from "@/types/dto/user/roleDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 
 interface ProductDetailsProps {

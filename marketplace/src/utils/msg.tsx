@@ -3,7 +3,7 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
-export const Msg = (searchParams: ReadonlyURLSearchParams) => {
+export const searchParamsMsg = (searchParams: ReadonlyURLSearchParams) => {
   const successMsg = searchParams.get("success-msg");
   if (successMsg) toast.success(successMsg);
 

@@ -1,5 +1,5 @@
 import { api } from "@/services/axios";
-import { ProductsResponseDTO } from "@/types/dto/products/productsResponseDTO";
+import { ProductsResponseDTO } from "@/types/dto/product/productsResponseDTO";
 import { useQuery } from "@tanstack/react-query";
 import { useFilter } from "./useFilter";
 import { toast } from "react-toastify";
@@ -38,7 +38,7 @@ const fetcher = async (
       `/products?${params}`
     );
 
-    // TODO remover production
+    // TODO remover in production
     function sleep(ms: number) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
@@ -50,9 +50,9 @@ const fetcher = async (
     page.setTotal(response.total);
 
     return response;
-  } catch (error) {
+  } catch (error: unknown) {
     console.log(error);
-    toast.error("Error fetching products");
+    toast.error("Erro ao buscar os produtos!");
   }
 };
 

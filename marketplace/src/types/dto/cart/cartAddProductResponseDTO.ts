@@ -1,4 +1,4 @@
-import { ProductResponseDTO } from "../products/productResponseDTO";
+import { ProductResponseDTO } from "../product/productResponseDTO";
 
 export interface CartAddProductResponseDTO {
   product: ProductResponseDTO;

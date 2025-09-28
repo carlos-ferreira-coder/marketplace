@@ -1,4 +1,4 @@
-import { RoleDTO } from "../user/roleDTO";
+import { RoleDTO } from "./roleDTO";
 
 export interface LoginResponseDTO {
   user: {
@@ -6,8 +6,6 @@ export interface LoginResponseDTO {
     name: string;
     email: string;
     role: RoleDTO;
-    phone: string;
-    cpf: string;
   };
   accessToken: string;
 }

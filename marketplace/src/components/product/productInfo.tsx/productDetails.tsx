@@ -1,6 +1,6 @@
 import { Button } from "@/components/button";
 import { IconCart } from "@/components/icons/cart";
-import { useCart, useCartMutation } from "@/hooks/useCart";
+import { useCartMutation } from "@/hooks/useCart";
 import { CartAddProductRequestDTO } from "@/types/dto/cart/cartAddProductRequestDTO";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";

@@ -12,12 +12,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import styled from "styled-components";
 import { Button } from "@/components/button";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Form } from "./form";
 
 interface LoginFormProps {
   login: (request: LoginRequestDTO) => Promise<void>;
 }
-
-const Form = styled.form``;
 
 export const LoginForm = ({ login }: LoginFormProps) => {
   const router = useRouter();
@@ -29,14 +28,14 @@ export const LoginForm = ({ login }: LoginFormProps) => {
   });
 
   const onSubmit = (request: loginSchemaProps) => {
-    login(request);
-
     const params = new URLSearchParams();
 
     const productId = searchParams.get("productId");
     if (productId) params.append(productId, productId);
 
     router.replace(`${window.location.pathname}?${params.toString()}`);
+
+    login(request);
   };
 
   const onError = (errors: FieldErrors<LoginRequestDTO>) => {

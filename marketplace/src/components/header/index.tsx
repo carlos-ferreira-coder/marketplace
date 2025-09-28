@@ -9,8 +9,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import { toast } from "react-toastify";
-import { InputIcon } from "../input";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { InputSearch } from "./inputSearch";
 
 const sairaStencilOne = Saira_Stencil_One({
   weight: "400",
@@ -85,8 +84,7 @@ export const Header = ({ title }: HeaderProps) => {
         {title}
       </Logo>
       <div>
-        <InputIcon
-          icon={faSearch}
+        <InputSearch
           value={search}
           handleChange={setSearch}
           placeholder={

@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { IconUser } from "../icons/user";
 import { useRouter } from "next/navigation";
-import { RoleDTO } from "@/types/dto/user/roleDTO";
 
 interface UserControlListProps {
   isOpen: boolean;

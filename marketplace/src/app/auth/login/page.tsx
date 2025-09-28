@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { toast } from "react-toastify";
 import { DefaultLayout } from "@/components/default/defaultLayout";
-import { LoginForm } from "../../../components/form/loginForm";
+import { LoginForm } from "../../../components/form/auth/login";
 
 export default function Login() {
   const router = useRouter();

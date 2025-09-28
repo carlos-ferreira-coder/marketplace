@@ -1,5 +1,7 @@
 "use client";
 
+import { DefaultLayout } from "@/components/default/defaultLayout";
+import { RegisterForm } from "@/components/form/auth/register";
 import { useAuth } from "@/hooks/useAuth";
 import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -28,11 +30,9 @@ export default function Register() {
     router.push(`/auth/login?${params.toString()}`);
   };
 
-  handleRegister({
-    name: "test",
-    email: "abacate@abacate.com",
-    password: "@A1b2C3d4",
-    phone: "00000000000",
-    cpf: "99999922999",
-  });
+  return (
+    <DefaultLayout>
+      <RegisterForm register={handleRegister} />
+    </DefaultLayout>
+  );
 }

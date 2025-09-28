@@ -3,7 +3,7 @@
 import { useProducts } from "@/hooks/useProducts";
 import { ProductCard } from "./productCart";
 import styled from "styled-components";
-import { IconLoader, Loader } from "../loader";
+import { IconLoader, Loader } from "../../loader";
 import { toast } from "react-toastify";
 
 const ListContainer = styled.div`

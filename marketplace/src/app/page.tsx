@@ -3,7 +3,7 @@
 import { DefaultLayout } from "@/components/default/defaultLayout";
 import { FilterBar } from "@/components/filterBar";
 import { PageBar } from "@/components/pageBar";
-import { ProductList } from "@/components/productsList";
+import { ProductList } from "@/components/product/productsList";
 import { searchParamsMsg } from "@/utils/msg";
 import { useSearchParams } from "next/navigation";
 import styled from "styled-components";

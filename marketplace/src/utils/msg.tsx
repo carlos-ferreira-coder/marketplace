@@ -7,6 +7,9 @@ export const searchParamsMsg = (searchParams: ReadonlyURLSearchParams) => {
   const successMsg = searchParams.get("success-msg");
   if (successMsg) toast.success(successMsg);
 
+  const warningMsg = searchParams.get("warning-msg");
+  if (warningMsg) toast.warning(warningMsg);
+
   const errorMsg = searchParams.get("error-msg");
-  if (errorMsg) toast.success(errorMsg);
+  if (errorMsg) toast.error(errorMsg);
 };

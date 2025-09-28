@@ -118,7 +118,6 @@ const ProductDescription = styled.div`
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
   const router = useRouter();
-  const { cart } = useCart();
   const { cartAddProduct } = useCartMutation();
 
   const handleCartAddProduct = () => {
@@ -135,13 +134,14 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
 
         router.push(`/cart?${params.toString()}`);
       },
+
       onError: (error: unknown) => {
-        if (axios.isAxiosError(error) && error.response) {
+        if (axios.isAxiosError(error)) {
           const params = new URLSearchParams({
-            "error-msg": "Não autorizado!",
+            product: product.id,
+            "warning-msg": "Faça login para continuar!",
           });
 
-          router.push(`/cart?${params.toString()}`);
           router.push(`/auth/login?${params}`);
         }
 
@@ -170,7 +170,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </ProductDescription>
       </ProductInfo>
 
-      <Btn onClick={handleCartAddProduct} disabled={!cart}>
+      <Btn onClick={handleCartAddProduct}>
         <IconCart />
         Adicionar ao carrinho
       </Btn>

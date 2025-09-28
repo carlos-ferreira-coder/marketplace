@@ -21,11 +21,9 @@ const DivContainer = styled.div`
 
 export const FilterBar = () => {
   return (
-    <>
-      <DivContainer>
-        <FilterByType />
-        <FilterByPriority />
-      </DivContainer>
-    </>
+    <DivContainer>
+      <FilterByType />
+      <FilterByPriority />
+    </DivContainer>
   );
 };

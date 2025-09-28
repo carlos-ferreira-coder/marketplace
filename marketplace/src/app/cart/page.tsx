@@ -2,7 +2,7 @@
 
 import { BackBtn } from "@/components/backButton";
 import { DefaultLayout } from "@/components/default/defaultLayout";
-import { CartItem } from "@/components/product/cartItem";
+import { CartItem } from "@/components/product/item/cartItem";
 import { useCart } from "@/hooks/useCart";
 import { searchParamsMsg } from "@/utils/msg";
 import { numberToBrl } from "@/utils/numberToBrl";
@@ -10,7 +10,7 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
 
-const Container = styled.div`
+const DivContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -126,7 +126,7 @@ export default function Cart() {
   return (
     <DefaultLayout>
       {cart && (
-        <Container>
+        <DivContainer>
           <CartListContainer>
             <BackBtn navigate="/" />
             <h3>Seu carrinho</h3>
@@ -162,7 +162,7 @@ export default function Cart() {
             </TotalItem>
             <ShopBtn>FINALIZAR COMPRA</ShopBtn>
           </CartResultContainer>
-        </Container>
+        </DivContainer>
       )}
     </DefaultLayout>
   );

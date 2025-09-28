@@ -8,7 +8,7 @@ import {
 } from "@/services/auth";
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
-import { RoleDTO } from "@/types/dto/user/roleDTO";
+import { RoleDTO, stringToRole } from "@/types/dto/user/roleDTO";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export interface AuthContextsProps {
@@ -48,13 +48,8 @@ export const AuthContextsProvider = ({
     setToken(storedToken);
     setName(storedName);
 
-    const validRoles: Record<string, RoleDTO> = {
-      ADMIN: RoleDTO.ADMIN,
-      USER: RoleDTO.USER,
-    };
-
     setRole(
-      storedRole && validRoles[storedRole] ? validRoles[storedRole] : null
+      storedRole && stringToRole[storedRole] ? stringToRole[storedRole] : null
     );
   }, []);
 

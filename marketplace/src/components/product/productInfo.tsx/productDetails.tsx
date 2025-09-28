@@ -49,12 +49,14 @@ const ProductInfo = styled.div`
   }
 `;
 
+/*
 const Type = styled.span`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
   color: var(--text-dark-2);
 `;
+*/
 
 const Price = styled.span`
   font-weight: 600;

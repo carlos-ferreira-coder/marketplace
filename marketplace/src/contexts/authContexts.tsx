@@ -1,7 +1,13 @@
 "use client";
 
-import { loginService } from "@/services/auth";
+import {
+  authLogin,
+  authRegister,
+  LoginRequestProps,
+  RegisterRequestProps,
+} from "@/services/auth";
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
+import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
 import { RoleDTO } from "@/types/dto/user/roleDTO";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
@@ -9,7 +15,8 @@ export interface AuthContextsProps {
   name: string | null;
   role: RoleDTO | null;
   token: string | null;
-  login: (request: LoginRequestDTO) => Promise<void>;
+  register: (request: RegisterRequestDTO) => Promise<RegisterRequestProps>;
+  login: (request: LoginRequestDTO) => Promise<LoginRequestProps>;
   logout: () => void;
 }
 
@@ -17,7 +24,8 @@ export const AuthContexts = createContext<AuthContextsProps>({
   name: null,
   role: null,
   token: null,
-  login: async () => {},
+  register: async () => ({ success: false, error: "" }),
+  login: async () => ({ success: false, error: "" }),
   logout: () => {},
 });
 
@@ -33,14 +41,29 @@ export const AuthContextsProvider = ({
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("token");
-    if (accessToken) setToken(accessToken);
+    const storedName = localStorage.getItem("name");
+    const storedRole = localStorage.getItem("role");
+    const storedToken = localStorage.getItem("token");
+
+    if (storedName) setName(storedName);
+    if (storedRole) setRole(JSON.parse(storedRole) as RoleDTO);
+    if (storedToken) setToken(storedToken);
   }, [setToken]);
 
-  const login = async (request: LoginRequestDTO) => {
-    const response = await loginService(request);
+  const register = async (
+    request: RegisterRequestDTO
+  ): Promise<RegisterRequestProps> => {
+    return await authRegister(request);
+  };
 
-    if (!response) return;
+  const login = async (
+    request: LoginRequestDTO
+  ): Promise<LoginRequestProps> => {
+    const auth = await authLogin(request);
+
+    if (!auth.success) return auth;
+
+    const response = auth.data;
 
     setName(response.user.name);
     setRole(response.user.role);
@@ -49,6 +72,8 @@ export const AuthContextsProvider = ({
     localStorage.setItem("name", response.user.name);
     localStorage.setItem("role", `${response.user.role}`);
     localStorage.setItem("token", response.accessToken);
+
+    return auth;
   };
 
   const logout = () => {
@@ -62,7 +87,9 @@ export const AuthContextsProvider = ({
   };
 
   return (
-    <AuthContexts.Provider value={{ name, role, token, login, logout }}>
+    <AuthContexts.Provider
+      value={{ name, role, token, register, login, logout }}
+    >
       {children}
     </AuthContexts.Provider>
   );

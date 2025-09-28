@@ -2,6 +2,7 @@
 
 import { BackBtn } from "@/components/backButton";
 import { DefaultLayout } from "@/components/default/defaultLayout";
+import { CartItem } from "@/components/product/cartItem";
 import { useCart } from "@/hooks/useCart";
 import { searchParamsMsg } from "@/utils/msg";
 import { numberToBrl } from "@/utils/numberToBrl";
@@ -102,19 +103,15 @@ export default function Cart() {
   searchParamsMsg(searchParams);
 
   if (error) {
-    let params = new URLSearchParams({
-      "error-msg": "Erro ao buscar o carrinho!",
-    });
+    const params = new URLSearchParams();
 
     if (axios.isAxiosError(error) && error.response) {
       if (error.response.status === 401) {
-        params = new URLSearchParams({
-          "error-msg": "Não autorizado!",
-        });
+        params.append("error-msg", "Não autorizado!");
+      } else if (error.response.status === 404) {
+        params.append("error-msg", "Carrinho não encontrado!");
       } else {
-        params = new URLSearchParams({
-          "error-msg": "Carrinho não encontrado!",
-        });
+        params.append("error-msg", "Erro ao buscar o carrinho!");
       }
     }
 

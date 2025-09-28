@@ -32,7 +32,7 @@ export default function Product() {
       "error-msg": "Erro ao buscar o produto!",
     });
 
-    if (axios.isAxiosError(error) && error.response) {
+    if (axios.isAxiosError(error)) {
       params = new URLSearchParams({
         "error-msg": "Produto não encontrado!",
       });

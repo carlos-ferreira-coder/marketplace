@@ -6,34 +6,48 @@ import axios from "axios";
 import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
 import { RegisterResponseDTO } from "@/types/dto/user/registerResponseDTO";
 
-export const authLogin = async (request: LoginRequestDTO) => {
+type loginSuccess = { success: true; data: LoginResponseDTO };
+type loginFailure = { success: false; error: string };
+export type LoginRequestProps = loginSuccess | loginFailure;
+
+export const authLogin = async (
+  request: LoginRequestDTO
+): Promise<LoginRequestProps> => {
   try {
     const { data: response } = await api.post<LoginResponseDTO>(
       "/auth/login",
       request
     );
-    return response;
-  } catch (error: unknown) {
+
+    return { success: true, data: response };
+  } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      toast.error("Email ou senha incorreto!");
+      return { success: false, error: "Email ou senha incorreto!" };
     }
 
-    toast.error("Erro ao realizar o login!");
+    return { success: false, error: "Erro ao realizar o login!" };
   }
 };
 
-export const authRegister = async (request: RegisterRequestDTO) => {
+type registerSuccess = { success: true; data: RegisterResponseDTO };
+type registerFailure = { success: false; error: string };
+export type RegisterRequestProps = registerSuccess | registerFailure;
+
+export const authRegister = async (
+  request: RegisterRequestDTO
+): Promise<RegisterRequestProps> => {
   try {
     const { data: response } = await api.post<RegisterResponseDTO>(
       "/auth/register",
       request
     );
-    return response;
+
+    return { success: true, data: response };
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
-      toast.error("O usuário já existe!");
+      return { success: false, error: "O usuário já existe!" };
     }
 
-    toast.error("Erro ao realizar o cadastro!");
+    return { success: false, error: "Erro ao realizar o cadastro!" };
   }
 };

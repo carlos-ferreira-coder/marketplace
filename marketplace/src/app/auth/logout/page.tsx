@@ -2,16 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 
 export default function Logout() {
   const router = useRouter();
   const { logout } = useAuth();
 
-  logout();
+  useEffect(() => {
+    logout();
 
-  const params = new URLSearchParams({
-    "success-msg": "Deslogado com sucesso!",
-  });
+    const params = new URLSearchParams({
+      "success-msg": "Deslogado com sucesso!",
+    });
 
-  router.push(`/?${params.toString()}`);
+    router.push(`/?${params.toString()}`);
+  }, [logout, router]);
+
+  return null;
 }

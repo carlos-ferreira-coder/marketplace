@@ -51,6 +51,9 @@ export const PaginationBar = () => {
   const { page, setPage, limit, total } = usePage();
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
+  const pagination = Pagination({ page, limit, total });
+  const totalPages = Math.ceil(total / limit);
+
   useEffect(() => {
     setWindowWidth(window.innerWidth);
 
@@ -59,9 +62,6 @@ export const PaginationBar = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const pagination = Pagination({ page, limit, total });
-  const totalPages = Math.ceil(total / limit);
 
   const handleChangePage = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;

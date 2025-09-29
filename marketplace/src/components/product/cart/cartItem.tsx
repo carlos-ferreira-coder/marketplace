@@ -192,7 +192,7 @@ export function CartItem({ item }: CartItemProps) {
             }
           >
             {
-              // TODO storage ? storage : item.quantity + 3
+              // storage ? storage : item.quantity + 3
               Array.from({ length: item.quantity + 3 }, (_, i) => (
                 <option key={i + 1} value={i + 1}>
                   {i + 1}

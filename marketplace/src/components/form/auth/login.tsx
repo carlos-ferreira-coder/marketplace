@@ -21,7 +21,6 @@ interface LoginFormProps {
 export const LoginForm = ({ login }: LoginFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [visible, setVisible] = useState<boolean>(false);
 
   const { reset, register, handleSubmit } = useForm<loginSchemaProps>({
     resolver: zodResolver(loginSchema),

@@ -2,8 +2,6 @@ import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
 import { IconCart } from "../icons/cart";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
-import { RoleDTO } from "@/types/dto/user/roleDTO";
 
 const DivContainer = styled.div`
   position: relative;

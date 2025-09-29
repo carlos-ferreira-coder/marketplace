@@ -17,8 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import styled from "styled-components";
-import { Form } from "./form";
+import { Form } from ".";
 
 interface RegisterFormProps {
   register: (request: RegisterRequestDTO) => Promise<void>;

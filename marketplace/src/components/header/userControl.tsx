@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { IconUser } from "../icons/user";
 import { useRouter } from "next/navigation";
+import { Divider } from "../divider";
 
 interface UserControlListProps {
   isOpen: boolean;
@@ -58,14 +59,6 @@ const UserControlList = styled.ul<UserControlListProps>`
     margin-top: 4px;
   }
 
-  > div {
-    width: 100%;
-    height: 1px;
-    margin: 8px 0px;
-    padding: 0px;
-    background: var(--shapes-2);
-  }
-
   @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     right: 0;
   }
@@ -119,7 +112,7 @@ export const UserControl = () => {
               >
                 Cadastrar Produto
               </UserControlItem>
-              <div></div>
+              <Divider />
             </>
           )}
           <UserControlItem

@@ -9,10 +9,9 @@ import { faLock, faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
-import styled from "styled-components";
 import { Button } from "@/components/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Form } from "./form";
+import { Form } from ".";
 
 interface LoginFormProps {
   login: (request: LoginRequestDTO) => Promise<void>;

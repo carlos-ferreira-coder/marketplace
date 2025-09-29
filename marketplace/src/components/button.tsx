@@ -9,6 +9,7 @@ export const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   gap: 8px;
 
   background: ${(props) => {

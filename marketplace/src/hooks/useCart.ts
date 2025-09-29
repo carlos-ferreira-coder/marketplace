@@ -10,7 +10,6 @@ import { CartRemoveProductRequestDTO } from "@/types/dto/cart/cartRemoveProductR
 import { CartRemoveProductResponseDTO } from "@/types/dto/cart/cartRemoveProductResponseDTO";
 import { CartDecreaseQuantityResponseDTO } from "@/types/dto/cart/cartDecreaseQuantityResponseDTO";
 import axios from "axios";
-import { RoleDTO } from "@/types/dto/user/roleDTO";
 
 const fetcher = async (token: string): Promise<CartResponseDTO> => {
   const { data: response } = await api.get<CartResponseDTO>("/cart", {
@@ -43,32 +42,17 @@ const cartRemoveProductFn = async (
   token: string,
   cartRemoveProduct: CartRemoveProductRequestDTO
 ): Promise<CartRemoveProductResponseDTO> => {
-  try {
-    const { data: response } = await api.delete<CartRemoveProductResponseDTO>(
-      "/cart/remove-product",
-      {
-        data: cartRemoveProduct,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return response;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response) {
-      const msg =
-        error.response.status === 401
-          ? "Não autorizado!"
-          : "Produto não encontrado no carrinho!";
-      toast.error(msg);
-      throw error;
+  const { data: response } = await api.delete<CartRemoveProductResponseDTO>(
+    "/cart/remove-product",
+    {
+      data: cartRemoveProduct,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
+  );
 
-    console.log(error);
-    toast.error("Erro ao remover produto no carrinho!");
-    throw error;
-  }
+  return response;
 };
 
 const cartDecreaseQuantityFn = async (

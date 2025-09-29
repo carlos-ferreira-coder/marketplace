@@ -1,3 +1,4 @@
+import { Divider } from "@/components/divider";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
 import { useRouter } from "next/navigation";
@@ -41,15 +42,8 @@ const Card = styled.div`
     align-items: start;
     justify-content: center;
     flex-direction: column;
-    padding: 8px 0px;
-
-    > div {
-      width: 228px;
-      height: 1px;
-      margin: 8px 0px;
-      padding: 0px;
-      background: var(--shapes-2);
-    }
+    padding: 8px 12px;
+    width: 100%;
   }
 `;
 
@@ -71,7 +65,7 @@ export const ProductCard = ({
       <img src={imageUrl} alt={name} />
       <div>
         <h3>{name}</h3>
-        <div></div>
+        <Divider />
         <p>{numberToBrl(price)}</p>
       </div>
     </Card>

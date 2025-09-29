@@ -2,14 +2,12 @@ import { api } from "@/services/axios";
 import { CartResponseDTO } from "@/types/dto/cart/cartResponseDTO";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "./useAuth";
-import { toast } from "react-toastify";
 import { CartAddProductRequestDTO } from "@/types/dto/cart/cartAddProductRequestDTO";
 import { CartAddProductResponseDTO } from "@/types/dto/cart/cartAddProductResponseDTO";
 import { CartDecreaseQuantityRequestDTO } from "@/types/dto/cart/cartDecreaseQuantityRequestDTO";
 import { CartRemoveProductRequestDTO } from "@/types/dto/cart/cartRemoveProductRequestDTO";
 import { CartRemoveProductResponseDTO } from "@/types/dto/cart/cartRemoveProductResponseDTO";
 import { CartDecreaseQuantityResponseDTO } from "@/types/dto/cart/cartDecreaseQuantityResponseDTO";
-import axios from "axios";
 
 const fetcher = async (token: string): Promise<CartResponseDTO> => {
   const { data: response } = await api.get<CartResponseDTO>("/cart", {

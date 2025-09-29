@@ -5,6 +5,7 @@ import { ProductCard } from "./productCart";
 import styled from "styled-components";
 import { Loader } from "../../loader";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const ListContainer = styled.div`
   display: grid;
@@ -17,7 +18,9 @@ const ListContainer = styled.div`
 export const ProductList = () => {
   const { products, error, isLoading } = useProducts();
 
-  if (error) toast.error("Erro ao buscar os produtos!");
+  useEffect(() => {
+    if (error) toast.error("Erro ao buscar os produtos!");
+  }, [error]);
 
   if (isLoading) return <Loader />;
 

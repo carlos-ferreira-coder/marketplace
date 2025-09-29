@@ -1,9 +1,12 @@
 import { Button } from "@/components/button";
 import { IconCart } from "@/components/icons/cart";
+import { useAuth } from "@/hooks/useAuth";
 import { useCartMutation } from "@/hooks/useCart";
 import { CartAddProductRequestDTO } from "@/types/dto/cart/cartAddProductRequestDTO";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -99,6 +102,7 @@ const ProductDescription = styled.div`
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
   const router = useRouter();
+  const { role } = useAuth();
   const { cartAddProduct } = useCartMutation();
 
   const handleCartAddProduct = () => {
@@ -151,15 +155,38 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </ProductDescription>
       </ProductInfo>
 
-      <Button
-        background="info"
-        textTransform={"uppercase"}
-        onClick={handleCartAddProduct}
-        style={{ marginTop: "35px" }}
-      >
-        <IconCart />
-        Adicionar ao carrinho
-      </Button>
+      {role === "USER" ? (
+        <Button
+          background="info"
+          textTransform={"uppercase"}
+          onClick={handleCartAddProduct}
+          style={{ marginTop: "35px" }}
+        >
+          <IconCart />
+          Adicionar ao carrinho
+        </Button>
+      ) : (
+        <div>
+          <Button
+            background="info"
+            textTransform={"uppercase"}
+            onClick={() => router.push(`/product/update/${product.id}`)}
+            style={{ marginTop: "35px" }}
+          >
+            <FontAwesomeIcon icon={faPen} />
+            Editar produto
+          </Button>
+          <Button
+            background="delete"
+            textTransform={"uppercase"}
+            onClick={() => router.push(`/product/delete/${product.id}`)}
+            style={{ marginTop: "20px" }}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+            Excluir produto
+          </Button>
+        </div>
+      )}
     </DivContainer>
   );
 };

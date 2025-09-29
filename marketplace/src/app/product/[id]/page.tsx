@@ -2,13 +2,14 @@
 
 import { BackBtn } from "@/components/backButton";
 import { DefaultLayout } from "@/components/default/defaultLayout";
-import { IconLoader, Loader } from "@/components/loader";
+import { Loader } from "@/components/loader";
 import { useProduct } from "@/hooks/useProduct";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import axios from "axios";
 import { ProductInfo } from "@/components/product/productInfo.tsx";
 import { searchParamsMsg } from "@/utils/msg";
+import { useEffect } from "react";
 
 const DivContainer = styled.div`
   display: flex;
@@ -21,25 +22,29 @@ export default function Product() {
   const router = useRouter();
   const params = useParams<{ id: string }>();
   const searchParams = useSearchParams();
-
-  searchParamsMsg(searchParams);
   const { product, error, isLoading } = useProduct(params.id);
 
-  if (isLoading) return <Loader />;
+  useEffect(() => {
+    searchParamsMsg(searchParams);
+  }, [searchParams]);
 
-  if (error) {
-    let params = new URLSearchParams({
-      "error-msg": "Erro ao buscar o produto!",
-    });
-
-    if (axios.isAxiosError(error)) {
-      params = new URLSearchParams({
-        "error-msg": "Produto não encontrado!",
+  useEffect(() => {
+    if (error) {
+      let params = new URLSearchParams({
+        "error-msg": "Erro ao buscar o produto!",
       });
-    }
 
-    router.push(`/?${params.toString()}`);
-  }
+      if (axios.isAxiosError(error)) {
+        params = new URLSearchParams({
+          "error-msg": "Produto não encontrado!",
+        });
+      }
+
+      router.push(`/?${params.toString()}`);
+    }
+  }, [error, router]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <DefaultLayout>

@@ -7,13 +7,16 @@ import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { toast } from "react-toastify";
 import { DefaultLayout } from "@/components/default/defaultLayout";
 import { LoginForm } from "../../../components/form/auth/login";
+import { useEffect } from "react";
 
 export default function Login() {
   const router = useRouter();
   const { login } = useAuth();
   const searchParams = useSearchParams();
 
-  searchParamsMsg(searchParams);
+  useEffect(() => {
+    searchParamsMsg(searchParams);
+  }, [searchParams]);
 
   const handleLogin = async (request: LoginRequestDTO) => {
     const response = await login(request);

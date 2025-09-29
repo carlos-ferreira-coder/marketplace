@@ -8,6 +8,7 @@ import { useCart } from "@/hooks/useCart";
 import { searchParamsMsg } from "@/utils/msg";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const DivContainer = styled.div`
@@ -26,25 +27,29 @@ export default function Cart() {
   const { cart, error, isLoading } = useCart();
   const searchParams = useSearchParams();
 
-  searchParamsMsg(searchParams);
+  useEffect(() => {
+    searchParamsMsg(searchParams);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (error) {
+      const params = new URLSearchParams();
+
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 401) {
+          params.append("error-msg", "Não autorizado!");
+        } else if (error.response.status === 404) {
+          params.append("error-msg", "Carrinho não encontrado!");
+        }
+      } else {
+        params.append("error-msg", "Erro ao buscar o carrinho!");
+      }
+
+      router.push(`/auth/login?${params.toString()}`);
+    }
+  }, [error, router]);
 
   if (isLoading) return <Loader />;
-
-  if (error) {
-    const params = new URLSearchParams();
-
-    if (axios.isAxiosError(error) && error.response) {
-      if (error.response.status === 401) {
-        params.append("error-msg", "Não autorizado!");
-      } else if (error.response.status === 404) {
-        params.append("error-msg", "Carrinho não encontrado!");
-      }
-    } else {
-      params.append("error-msg", "Erro ao buscar o carrinho!");
-    }
-
-    router.push(`/auth/login?${params.toString()}`);
-  }
 
   return (
     <DefaultLayout>

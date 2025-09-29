@@ -12,7 +12,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ButtonContainer, Form } from ".";
-import { useState } from "react";
 
 interface LoginFormProps {
   login: (request: LoginRequestDTO) => Promise<void>;

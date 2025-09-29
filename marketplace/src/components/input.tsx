@@ -18,7 +18,6 @@ export const PrimaryInput = styled.input`
   color: var(--text-dark);
 
   &:focus {
-    outline: none;
     box-shadow: 0 0 0 2px var(--orange-low);
   }
 

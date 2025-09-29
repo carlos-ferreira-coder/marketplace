@@ -4,7 +4,7 @@ import { InputHTMLAttributes } from "react";
 import { styled } from "styled-components";
 
 export const Input = styled.input`
-  width: 150px;
+  width: 140px;
   border: none;
   border-radius: 8px;
   padding: 10px 16px;
@@ -29,7 +29,7 @@ export const Input = styled.input`
 
 const InputContainer = styled.div`
   position: relative;
-  width: 150px;
+  width: 140px;
 
   svg {
     position: absolute;

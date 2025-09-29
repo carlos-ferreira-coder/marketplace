@@ -38,6 +38,11 @@ const TagHeader = styled.header`
 
   @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     flex-direction: row;
+    padding: 34px 100px;
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoint.xl}) {
+    flex-direction: row;
     padding: 34px 150px;
   }
 `;

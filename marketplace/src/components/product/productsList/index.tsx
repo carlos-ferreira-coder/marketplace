@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { Loader } from "../../loader";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ListContainer = styled.div`
   display: grid;
@@ -16,11 +18,22 @@ const ListContainer = styled.div`
 `;
 
 export const ProductList = () => {
+  const router = useRouter();
   const { products, error, isLoading } = useProducts();
 
   useEffect(() => {
-    if (error) toast.error("Erro ao buscar os produtos!");
-  }, [error]);
+    if (error) {
+      const params = new URLSearchParams();
+
+      if (axios.isAxiosError(error)) {
+        params.append("error-msg", "Produto não encontrado!");
+      } else {
+        params.append("error-msg", "Erro ao buscar o produto!");
+      }
+
+      router.push(`/?${params.toString()}`);
+    }
+  }, [error, router]);
 
   if (isLoading) return <Loader />;
 

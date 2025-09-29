@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { IconUser } from "../icons/user";
 import { useRouter } from "next/navigation";
-import { Divider } from "../divider";
 
 interface UserControlListProps {
   isOpen: boolean;
@@ -110,15 +109,12 @@ export const UserControl = () => {
       {isOpen && (
         <UserControlList isOpen={isOpen}>
           {auth.role === "ADMIN" && (
-            <>
-              <UserControlItem
-                selected={window.location.pathname === "/product/create"}
-                onClick={() => handleClickItem("/product/create")}
-              >
-                Cadastrar Produto
-              </UserControlItem>
-              <Divider />
-            </>
+            <UserControlItem
+              selected={window.location.pathname === "/product/create"}
+              onClick={() => handleClickItem("/product/create")}
+            >
+              Cadastrar Produto
+            </UserControlItem>
           )}
           <UserControlItem
             selected={window.location.pathname === "/auth/register"}
@@ -126,7 +122,6 @@ export const UserControl = () => {
           >
             cadastrar usuário
           </UserControlItem>
-          <Divider />
           <UserControlItem
             selected={window.location.pathname === "/auth/login"}
             onClick={() => handleClickItem("/auth/login")}

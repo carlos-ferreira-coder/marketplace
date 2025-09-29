@@ -9,8 +9,12 @@ import { UpdateProductRequestDTO } from "@/types/dto/product/updateProductReques
 import { UpdateProductResponseDTO } from "@/types/dto/product/updateProductResponseDTO";
 import { DeleteProductRequestDTO } from "@/types/dto/product/deleteProductRequestDTO";
 import { DeleteProductResponseDTO } from "@/types/dto/product/deleteProductResponseDTO";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
-const fetcher = async (id: string): Promise<ProductResponseDTO> => {
+export const fetcherProduct = async (
+  id: string
+): Promise<ProductResponseDTO> => {
   const { data: response } = await api.get<ProductResponseDTO>(
     `/products/${id}`
   );
@@ -98,7 +102,7 @@ const deleteProductFn = async (
 
 export const useProduct = (id: string) => {
   const { data, error, isLoading } = useQuery({
-    queryFn: () => fetcher(id),
+    queryFn: () => fetcherProduct(id),
     queryKey: ["product", id],
     enabled: !!id,
     staleTime: 1000 * 60 * 10, // 10min
@@ -110,35 +114,66 @@ export const useProduct = (id: string) => {
 
 export const useProductMutation = () => {
   const { token } = useAuth();
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { mutate: createProduct } = useMutation({
-    mutationFn: (createProduct: CreateProductRequestDTO) =>
-      createProductFn(token!, createProduct!),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["product"],
-      });
+    mutationFn: (payload: CreateProductRequestDTO) =>
+      createProductFn(token!, payload!),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["product"] });
     },
+    onSuccess: () => {},
+    onError: () => {},
   });
 
   const { mutate: updateProduct } = useMutation({
-    mutationFn: (updateProduct: UpdateProductRequestDTO) =>
-      updateProductFn(token!, updateProduct!),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["product"],
-      });
+    mutationFn: (payload: UpdateProductRequestDTO) =>
+      updateProductFn(token!, payload!),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["product"] });
     },
+    onSuccess: () => {},
+    onError: () => {},
   });
 
   const { mutate: deleteProduct } = useMutation({
-    mutationFn: (deleteProduct: DeleteProductRequestDTO) =>
-      deleteProductFn(token!, deleteProduct!),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["product"],
+    mutationFn: (payload: DeleteProductRequestDTO) =>
+      deleteProductFn(token!, payload!),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["product"] });
+    },
+    onSuccess: async (_data, variables) => {
+      const product = await fetcherProduct(variables.id);
+
+      const searchParams = new URLSearchParams({
+        "success-msg": `"${product.name}" deletado(a) com sucesso!`,
       });
+
+      router.push(`/?${searchParams.toString()}`);
+    },
+    onError: async (error, variables) => {
+      const product = await fetcherProduct(variables.id);
+
+      const params = new URLSearchParams({
+        productId: variables.id,
+      });
+
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          params.append("error-msg", "Não autorizado!");
+          router.push(`/auth/login?${params.toString()}`);
+        } else if (error.response?.status === 403) {
+          params.append("error-msg", "Função de administrador necessária!");
+          router.push(`/auth/login?${params.toString()}`);
+        } else {
+          params.append("error-msg", `"${product.name}" não encontrado!`);
+        }
+      } else {
+        params.append("error-msg", `Erro ao deletar "${product.name}"!`);
+      }
+
+      router.push(`/cart?${params.toString()}`);
     },
   });
 

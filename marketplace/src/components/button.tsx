@@ -31,8 +31,11 @@ export const Button = styled.button<ButtonProps>`
     transform: translateY(2px);
   }
 
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+
   border-radius: 4px;
-  border: ${(props) => (props.background !== "white" ? "none" : "1px solid")};
+  border: ${(props) =>
+    props.background !== "white" ? "none" : "1px solid rgba(0, 0, 0, 0.1)"};
   padding: 10px 0;
   text-align: center;
   font-weight: 500;

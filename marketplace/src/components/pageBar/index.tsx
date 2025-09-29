@@ -17,10 +17,8 @@ const DivContainer = styled.div`
 
 export const PageBar = () => {
   return (
-    <>
-      <DivContainer>
-        <PaginationBar />
-      </DivContainer>
-    </>
+    <DivContainer>
+      <PaginationBar />
+    </DivContainer>
   );
 };

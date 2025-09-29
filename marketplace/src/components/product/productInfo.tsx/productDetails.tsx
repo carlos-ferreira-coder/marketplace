@@ -7,9 +7,7 @@ import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 
 interface ProductDetailsProps {
@@ -106,33 +104,9 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
   const { cartAddProduct } = useCartMutation();
 
   const handleCartAddProduct = () => {
-    const cartAddProductData: CartAddProductRequestDTO = {
+    cartAddProduct({
       productId: product.id,
       quantity: 1,
-    };
-
-    cartAddProduct(cartAddProductData, {
-      onSuccess: () => {
-        const params = new URLSearchParams({
-          "success-msg": `${product.name} inserido(a) no carrinho!`,
-        });
-
-        router.push(`/cart?${params.toString()}`);
-      },
-
-      onError: (error: unknown) => {
-        if (axios.isAxiosError(error)) {
-          const params = new URLSearchParams({
-            productId: product.id,
-            "warning-msg": "Faça login para continuar!",
-          });
-
-          router.push(`/auth/login?${params.toString()}`);
-        }
-
-        console.log(error);
-        toast.error("Erro ao adicionar produto no carrinho!");
-      },
     });
   };
 

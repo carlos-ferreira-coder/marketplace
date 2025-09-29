@@ -10,6 +10,7 @@ export const PrimaryInput = styled.input`
   padding: 10px 16px;
 
   background-color: var(--bg-secondary);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
 
   font-family: inherit;
   font-weight: 400;
@@ -18,6 +19,7 @@ export const PrimaryInput = styled.input`
   color: var(--text-dark);
 
   &:focus {
+    outline: none;
     box-shadow: 0 0 0 2px var(--orange-low);
   }
 

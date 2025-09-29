@@ -8,8 +8,11 @@ import { CartDecreaseQuantityRequestDTO } from "@/types/dto/cart/cartDecreaseQua
 import { CartRemoveProductRequestDTO } from "@/types/dto/cart/cartRemoveProductRequestDTO";
 import { CartRemoveProductResponseDTO } from "@/types/dto/cart/cartRemoveProductResponseDTO";
 import { CartDecreaseQuantityResponseDTO } from "@/types/dto/cart/cartDecreaseQuantityResponseDTO";
+import { useRouter } from "next/navigation";
+import { fetcherProduct } from "./useProduct";
+import axios from "axios";
 
-const fetcher = async (token: string): Promise<CartResponseDTO> => {
+const fetcherCart = async (token: string): Promise<CartResponseDTO> => {
   const { data: response } = await api.get<CartResponseDTO>("/cart", {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -74,7 +77,7 @@ export const useCart = () => {
   const { token, role } = useAuth();
 
   const { data, error, isLoading } = useQuery({
-    queryFn: () => fetcher(token!),
+    queryFn: () => fetcherCart(token!),
     queryKey: ["cart"],
     enabled: !!token && role === "USER",
     staleTime: 1000 * 60 * 30, // 30min
@@ -86,37 +89,129 @@ export const useCart = () => {
 
 export const useCartMutation = () => {
   const { token } = useAuth();
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { mutate: cartAddProduct } = useMutation({
-    mutationFn: (cartAddProduct: CartAddProductRequestDTO) =>
-      cartAddProductFn(token!, cartAddProduct!),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cart"],
-      });
+    mutationFn: (payload: CartAddProductRequestDTO) =>
+      cartAddProductFn(token!, payload!),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
-  });
+    onSuccess: async (_data, payload) => {
+      const product = await fetcherProduct(payload.productId);
 
-  const { mutate: cartRemoveProduct } = useMutation({
-    mutationFn: (cartRemoveProduct: CartRemoveProductRequestDTO) =>
-      cartRemoveProductFn(token!, cartRemoveProduct!),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cart"],
+      const params = new URLSearchParams({
+        "success-msg": `"${product.name}" inserido(a) no carrinho!`,
       });
+
+      router.push(`/cart?${params.toString()}`);
+    },
+    onError: async (error, payload) => {
+      const product = await fetcherProduct(payload.productId);
+
+      const params = new URLSearchParams({
+        productId: payload.productId,
+      });
+
+      if (axios.isAxiosError(error)) {
+        params.append("warning-msg", "Não autorizado!");
+        router.push(`/auth/login?${params.toString()}`);
+      }
+
+      params.append(
+        "error-msg",
+        `Erro ao adicionar "${product.name}" no carrinho!`
+      );
+      router.push(`/cart?${params.toString()}`);
     },
   });
 
   const { mutate: cartDecreaseQuantity } = useMutation({
-    mutationFn: (cartDecreaseQuantity: CartDecreaseQuantityRequestDTO) =>
-      cartDecreaseQuantityFn(token!, cartDecreaseQuantity!),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cart"],
+    mutationFn: (payload: CartDecreaseQuantityRequestDTO) =>
+      cartDecreaseQuantityFn(token!, payload!),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+    onSuccess: async (_data, payload) => {
+      const product = await fetcherProduct(payload.productId);
+
+      const params = new URLSearchParams({
+        "success-msg": `"${product.name}" atualizado(a) no carrinho!`,
       });
+
+      router.push(`/cart?${params.toString()}`);
+    },
+    onError: async (error, payload) => {
+      const product = await fetcherProduct(payload.productId);
+
+      const params = new URLSearchParams({
+        productId: payload.productId,
+      });
+
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          params.append("error-msg", "Não autorizado!");
+          router.push(`/auth/login?${params.toString()}`);
+        } else {
+          params.append(
+            "error-msg",
+            `"${product.name}" não encontrado(a) no carrinho!`
+          );
+        }
+      } else {
+        params.append(
+          "error-msg",
+          `Erro ao diminuir "${product.name}" do carrinho!`
+        );
+      }
+
+      router.push(`/cart?${params.toString()}`);
     },
   });
 
-  return { cartAddProduct, cartRemoveProduct, cartDecreaseQuantity };
+  const { mutate: cartRemoveProduct } = useMutation({
+    mutationFn: (payload: CartRemoveProductRequestDTO) =>
+      cartRemoveProductFn(token!, payload!),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+    onSuccess: async (_data, payload) => {
+      const product = await fetcherProduct(payload.productId);
+
+      const params = new URLSearchParams({
+        "success-msg": `"${product.name}" removido(a) no carrinho!`,
+      });
+
+      router.push(`/cart?${params.toString()}`);
+    },
+    onError: async (error, payload) => {
+      const product = await fetcherProduct(payload.productId);
+
+      const params = new URLSearchParams({
+        productId: payload.productId,
+      });
+
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          params.append("error-msg", "Não autorizado!");
+          router.push(`/auth/login?${params.toString()}`);
+        } else {
+          params.append(
+            "error-msg",
+            `"${product.name}" não encontrado(a) no carrinho!`
+          );
+        }
+      } else {
+        params.append(
+          "error-msg",
+          `Erro ao remover "${product.name}" do carrinho!`
+        );
+      }
+
+      router.push(`/cart?${params.toString()}`);
+    },
+  });
+
+  return { cartAddProduct, cartDecreaseQuantity, cartRemoveProduct };
 };

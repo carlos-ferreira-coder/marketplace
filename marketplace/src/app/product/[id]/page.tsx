@@ -30,14 +30,12 @@ export default function Product() {
 
   useEffect(() => {
     if (error) {
-      let params = new URLSearchParams({
-        "error-msg": "Erro ao buscar o produto!",
-      });
+      const params = new URLSearchParams();
 
       if (axios.isAxiosError(error)) {
-        params = new URLSearchParams({
-          "error-msg": "Produto não encontrado!",
-        });
+        params.append("error-msg", "Produto não encontrado!");
+      } else {
+        params.append("error-msg", "Erro ao buscar o produto!");
       }
 
       router.push(`/?${params.toString()}`);

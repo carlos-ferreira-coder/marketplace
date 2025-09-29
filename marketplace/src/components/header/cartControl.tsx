@@ -2,6 +2,9 @@ import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
 import { IconCart } from "../icons/cart";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import axios from "axios";
+import { Loader } from "../loader";
 
 const DivContainer = styled.div`
   position: relative;
@@ -27,16 +30,32 @@ const CartCountItems = styled.span`
 `;
 
 export const CartControl = () => {
-  const { cart } = useCart();
+  const { cart, error, isLoading } = useCart();
   const router = useRouter();
 
-  const handleNavigate = () => {
-    router.push("/cart");
-  };
+  useEffect(() => {
+    if (error) {
+      const params = new URLSearchParams();
+
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 401) {
+          params.append("error-msg", "Não autorizado!");
+        } else if (error.response.status === 404) {
+          params.append("error-msg", "Carrinho não encontrado!");
+        }
+      } else {
+        params.append("error-msg", "Erro ao buscar o carrinho!");
+      }
+
+      router.push(`/auth/login?${params.toString()}`);
+    }
+  }, [error, router]);
+
+  if (isLoading) return <Loader />;
 
   return (
     cart && (
-      <DivContainer onClick={handleNavigate}>
+      <DivContainer onClick={() => router.push("/cart")}>
         <IconCart />
         {cart.totalItems > 0 && (
           <CartCountItems>{cart.totalItems}</CartCountItems>

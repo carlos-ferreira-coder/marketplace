@@ -9,6 +9,8 @@ import {
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
 import { RoleDTO, stringToRole } from "@/types/dto/user/roleDTO";
+import { QueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export interface AuthContextsProps {
@@ -36,6 +38,8 @@ interface AuthContextsProviderProps {
 export const AuthContextsProvider = ({
   children,
 }: AuthContextsProviderProps) => {
+  const router = useRouter();
+  const queryClient = new QueryClient();
   const [name, setName] = useState<string | null>(null);
   const [role, setRole] = useState<RoleDTO | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -87,6 +91,14 @@ export const AuthContextsProvider = ({
     localStorage.setItem("name", "");
     localStorage.setItem("role", "");
     localStorage.setItem("token", "");
+
+    queryClient.invalidateQueries({ queryKey: ["cart"] });
+
+    const params = new URLSearchParams({
+      "success-msg": "Deslogado com sucesso!",
+    });
+
+    router.push(`/?${params.toString()}`);
   };
 
   return (

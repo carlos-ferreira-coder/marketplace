@@ -57,14 +57,14 @@ const Logo = styled.a`
 `;
 
 export const Header = ({ title }: HeaderProps) => {
-  const api = useApi();
+  const { error } = useApi();
   const theme = useTheme();
   const { search, setSearch } = useFilter();
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
   useEffect(() => {
-    if (api.error) toast.error("Api not responding!");
-  }, [api.error]);
+    if (error) toast.error("Api not responding!");
+  }, [error]);
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);

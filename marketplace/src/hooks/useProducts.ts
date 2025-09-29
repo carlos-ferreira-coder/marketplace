@@ -26,7 +26,7 @@ const mountParams = (filter: FilterContextsProps, page: PageContextsProps) => {
   return params;
 };
 
-const fetcher = async (
+const fetcherProducts = async (
   filter: FilterContextsProps,
   page: PageContextsProps
 ): Promise<ProductsResponseDTO> => {
@@ -57,7 +57,7 @@ export const useProducts = () => {
   const regexSearchDeferred = new RegExp(searchDeferred, "i");
 
   const { data, error, isLoading } = useQuery({
-    queryFn: () => fetcher(filter, page),
+    queryFn: () => fetcherProducts(filter, page),
     queryKey: ["products", filter, page],
     staleTime: 1000 * 60 * 10, // 10min
   });

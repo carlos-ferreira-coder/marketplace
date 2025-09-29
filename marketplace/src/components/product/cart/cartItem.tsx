@@ -3,8 +3,6 @@ import { ItemsResponseDTO } from "@/types/dto/cart/itemsResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import { styled } from "styled-components";
 
 interface CartItemProps {
@@ -90,77 +88,26 @@ const SelectQuantity = styled.select`
 `;
 
 export function CartItem({ item }: CartItemProps) {
-  const router = useRouter();
   const { cartAddProduct, cartRemoveProduct, cartDecreaseQuantity } =
     useCartMutation();
 
   const handleAddProduct = (quantity: number) => {
-    const cartAddProductData = {
+    cartAddProduct({
       productId: item.product.id,
       quantity: quantity,
-    };
-
-    cartAddProduct(cartAddProductData, {
-      onError: (error: unknown) => {
-        const params = new URLSearchParams();
-
-        if (axios.isAxiosError(error)) {
-          params.append("error-msg", "Não autorizado!");
-        } else {
-          params.append("error-msg", "Erro ao adicionar produto ao carrinho!");
-        }
-
-        router.push(`/cart?${params.toString()}`);
-      },
     });
   };
 
   const handleDecreaseQuantity = (quantity: number) => {
-    const cartDecreaseQuantityData = {
+    cartDecreaseQuantity({
       productId: item.product.id,
       quantity: quantity,
-    };
-
-    cartDecreaseQuantity(cartDecreaseQuantityData, {
-      onError: (error: unknown) => {
-        const params = new URLSearchParams();
-
-        if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            params.append("error-msg", "Não autorizado!");
-          } else {
-            params.append("error-msg", "Produto não encontrado no carrinho!");
-          }
-        } else {
-          params.append("error-msg", "Erro ao diminuir produto do carrinho!");
-        }
-
-        router.push(`/cart?${params.toString()}`);
-      },
     });
   };
 
   const handleRemoveProduct = () => {
-    const cartRemoveProductData = {
+    cartRemoveProduct({
       productId: item.product.id,
-    };
-
-    cartRemoveProduct(cartRemoveProductData, {
-      onError: (error: unknown) => {
-        const params = new URLSearchParams();
-
-        if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            params.append("error-msg", "Não autorizado!");
-          } else {
-            params.append("error-msg", "Produto não encontrado no carrinho!");
-          }
-        } else {
-          params.append("error-msg", "Erro ao remover produto do carrinho!");
-        }
-
-        router.push(`/cart?${params.toString()}`);
-      },
     });
   };
 

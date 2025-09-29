@@ -3,7 +3,7 @@
 import { useProducts } from "@/hooks/useProducts";
 import { ProductCard } from "./productCart";
 import styled from "styled-components";
-import { IconLoader, Loader } from "../../loader";
+import { Loader } from "../../loader";
 import { toast } from "react-toastify";
 
 const ListContainer = styled.div`
@@ -19,7 +19,7 @@ export const ProductList = () => {
 
   if (error) toast.error("Erro ao buscar os produtos!");
 
-  if (isLoading) return <Loader icon={IconLoader.spinner} />;
+  if (isLoading) return <Loader />;
 
   return (
     <ListContainer>

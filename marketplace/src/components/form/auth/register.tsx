@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { Form } from ".";
+import { ButtonContainer, Form } from ".";
 
 interface RegisterFormProps {
   register: (request: RegisterRequestDTO) => Promise<void>;
@@ -53,14 +53,47 @@ export const RegisterForm = ({ register: registerUser }: RegisterFormProps) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <InputIcon icon={faUser} {...register("name")} />
-      <InputIcon icon={faEnvelope} {...register("email")} />
-      <InputIcon icon={faLock} {...register("password")} />
-      <InputIcon icon={faLock} {...register("passwordCheck")} />
-      <InputIcon icon={faPhone} {...register("phone")} />
-      <InputIcon icon={faIdCard} {...register("cpf")} />
+      <InputIcon
+        icon={faUser}
+        {...register("name")}
+        placeholder="Digite seu nome completo"
+      />
 
-      <div>
+      <InputIcon
+        icon={faEnvelope}
+        {...register("email")}
+        placeholder="Digite seu e-mail"
+      />
+
+      <InputIcon
+        icon={faLock}
+        type="password"
+        {...register("password")}
+        placeholder="Digite sua senha"
+      />
+
+      <InputIcon
+        icon={faLock}
+        type="password"
+        {...register("passwordCheck")}
+        placeholder="Confirme sua senha"
+      />
+
+      <InputIcon
+        icon={faPhone}
+        {...register("phone")}
+        placeholder="Digite seu telefone"
+      />
+
+      <InputIcon
+        icon={faIdCard}
+        {...register("cpf")}
+        placeholder="Digite seu CPF"
+      />
+
+      <ButtonContainer>
+        <Button type="submit">cadastro</Button>
+
         <Button
           type="button"
           background={"white"}
@@ -68,11 +101,7 @@ export const RegisterForm = ({ register: registerUser }: RegisterFormProps) => {
         >
           limpar
         </Button>
-
-        <Button type="submit" background={"info"}>
-          cadastro
-        </Button>
-      </div>
+      </ButtonContainer>
     </Form>
   );
 };

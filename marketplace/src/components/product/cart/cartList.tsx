@@ -1,12 +1,12 @@
+"use client";
+
 import { CartResponseDTO } from "@/types/dto/cart/cartResponseDTO";
 import { CartItem } from "./cartItem";
 import styled from "styled-components";
 import { BackBtn } from "@/components/backButton";
+import { numberToBrl } from "@/utils/numberToBrl";
 
 const CartListContainer = styled.div`
-  display: flex;
-  min-width: 100vh;
-
   h3 {
     font-size: 24px;
     font-weight: 500;
@@ -23,6 +23,7 @@ const CartListContainer = styled.div`
     color: var(--text-dark-2);
 
     span {
+      margin-left: 12px;
       font-weight: 600;
     }
   }
@@ -48,8 +49,8 @@ export const CartList = ({ cart }: CartListProps) => {
 
       <h3>Seu carrinho</h3>
       <p>
-        Total {cart.totalItems} produtos
-        <span>{cart.totalPrice}</span>
+        Total ({cart.totalItems} produtos)
+        <span>{numberToBrl(cart.totalPrice)}</span>
       </p>
 
       <CartListItem>

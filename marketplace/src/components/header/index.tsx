@@ -6,7 +6,6 @@ import { CartControl } from "./cartControl";
 import { useFilter } from "@/hooks/useFilter";
 import { UserControl } from "./userControl";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import { toast } from "react-toastify";
 import { InputSearch } from "./inputSearch";
@@ -55,7 +54,6 @@ const Logo = styled.a`
 export const Header = ({ title }: HeaderProps) => {
   const api = useApi();
   const theme = useTheme();
-  const router = useRouter();
 
   if (api.error) toast.error("Api not responding!");
 
@@ -71,16 +69,9 @@ export const Header = ({ title }: HeaderProps) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleNavigate = (navigate: string) => {
-    router.push(navigate);
-  };
-
   return (
     <TagHeader>
-      <Logo
-        className={sairaStencilOne.className}
-        onClick={() => handleNavigate("/")}
-      >
+      <Logo className={sairaStencilOne.className} href="/">
         {title}
       </Logo>
       <div>

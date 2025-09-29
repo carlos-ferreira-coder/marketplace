@@ -11,7 +11,8 @@ import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Form } from ".";
+import { ButtonContainer, Form } from ".";
+import { useState } from "react";
 
 interface LoginFormProps {
   login: (request: LoginRequestDTO) => Promise<void>;
@@ -20,6 +21,7 @@ interface LoginFormProps {
 export const LoginForm = ({ login }: LoginFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [visible, setVisible] = useState<boolean>(false);
 
   const { reset, register, handleSubmit } = useForm<loginSchemaProps>({
     resolver: zodResolver(loginSchema),
@@ -44,10 +46,21 @@ export const LoginForm = ({ login }: LoginFormProps) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <InputIcon icon={faUserTie} {...register("email")} />
-      <InputIcon icon={faLock} {...register("password")} />
+      <InputIcon
+        icon={faUserTie}
+        {...register("email")}
+        placeholder="Digite seu email..."
+      />
+      <InputIcon
+        icon={faLock}
+        type="password"
+        {...register("password")}
+        placeholder="Digite sua senha..."
+      />
 
-      <div>
+      <ButtonContainer>
+        <Button type="submit">login</Button>
+
         <Button
           type="button"
           background={"white"}
@@ -55,11 +68,7 @@ export const LoginForm = ({ login }: LoginFormProps) => {
         >
           limpar
         </Button>
-
-        <Button type="submit" background={"info"}>
-          login
-        </Button>
-      </div>
+      </ButtonContainer>
     </Form>
   );
 };

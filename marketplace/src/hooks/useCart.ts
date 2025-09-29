@@ -38,6 +38,23 @@ const cartAddProductFn = async (
   return response;
 };
 
+const cartDecreaseQuantityFn = async (
+  token: string,
+  cartDecreaseQuantity: CartDecreaseQuantityRequestDTO
+): Promise<CartDecreaseQuantityResponseDTO> => {
+  const { data: response } = await api.patch<CartDecreaseQuantityResponseDTO>(
+    "/cart/decrease-quantity",
+    cartDecreaseQuantity,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response;
+};
+
 const cartRemoveProductFn = async (
   token: string,
   cartRemoveProduct: CartRemoveProductRequestDTO
@@ -53,38 +70,6 @@ const cartRemoveProductFn = async (
   );
 
   return response;
-};
-
-const cartDecreaseQuantityFn = async (
-  token: string,
-  cartDecreaseQuantity: CartDecreaseQuantityRequestDTO
-): Promise<CartDecreaseQuantityResponseDTO> => {
-  try {
-    const { data: response } = await api.patch<CartDecreaseQuantityResponseDTO>(
-      "/cart/decrease-quantity",
-      cartDecreaseQuantity,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return response;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response) {
-      const msg =
-        error.response.status === 401
-          ? "Não autorizado!"
-          : "Produto não encontrado no carrinho!";
-      toast.error(msg);
-      throw error;
-    }
-
-    console.log(error);
-    toast.error("Erro ao diminuir a quantidade do produto no carrinho!");
-    throw error;
-  }
 };
 
 export const useCart = () => {

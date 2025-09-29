@@ -10,7 +10,7 @@ export const Button = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 8px;
+  gap: 32px;
 
   background: ${(props) => {
     switch (props.background) {
@@ -27,8 +27,12 @@ export const Button = styled.button<ButtonProps>`
     }
   }};
 
+  &:active {
+    transform: translateY(2px);
+  }
+
   border-radius: 4px;
-  border: none;
+  border: ${(props) => (props.background !== "white" ? "none" : "1px solid")};
   padding: 10px 0;
   text-align: center;
   font-weight: 500;
@@ -38,8 +42,4 @@ export const Button = styled.button<ButtonProps>`
   color: ${(props) =>
     props.background !== "white" ? "white" : "var(--text-dark)"};
   cursor: ${(props) => (props.disabled ? "default" : "pointer")};
-
-  &:active {
-    transform: translateY(2px);
-  }
 `;

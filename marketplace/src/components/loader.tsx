@@ -33,15 +33,16 @@ export const enum IconLoader {
 }
 
 interface LoaderProps {
-  icon: IconLoader;
+  icon?: IconLoader;
 }
 
 export const Loader = ({ icon }: LoaderProps) => {
   return (
     <DivContainer>
-      {icon === IconLoader.spinner && <FontAwesomeIcon icon={faSpinner} />}
-      {icon === IconLoader.circleNotch && (
+      {icon === IconLoader.circleNotch ? (
         <FontAwesomeIcon icon={faCircleNotch} />
+      ) : (
+        <FontAwesomeIcon icon={faSpinner} />
       )}
     </DivContainer>
   );

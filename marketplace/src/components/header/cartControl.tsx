@@ -20,7 +20,7 @@ const CartCountItems = styled.span`
   padding: 0 5px;
   font-size: 10px;
 
-  background-color: var(--delete-color);
+  background-color: var(--orange-low);
   color: white;
 
   margin-left: -10px;

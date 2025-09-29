@@ -83,6 +83,11 @@ export const UserControl = () => {
 
   const handleOpen = () => setIsOpen((prev) => !prev);
 
+  const handleClickItem = (navigate: string) => {
+    setIsOpen(false);
+    router.push(navigate);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -108,7 +113,7 @@ export const UserControl = () => {
             <>
               <UserControlItem
                 selected={window.location.pathname === "/product/create"}
-                onClick={() => router.push("/product/create")}
+                onClick={() => handleClickItem("/product/create")}
               >
                 Cadastrar Produto
               </UserControlItem>
@@ -117,21 +122,21 @@ export const UserControl = () => {
           )}
           <UserControlItem
             selected={window.location.pathname === "/auth/register"}
-            onClick={() => router.push("/auth/register")}
+            onClick={() => handleClickItem("/auth/register")}
           >
-            cadastro
+            cadastrar usuário
           </UserControlItem>
-          {!auth.token ? (
-            <UserControlItem
-              selected={window.location.pathname === "/auth/login"}
-              onClick={() => router.push("/auth/login")}
-            >
-              login
-            </UserControlItem>
-          ) : (
+          <Divider />
+          <UserControlItem
+            selected={window.location.pathname === "/auth/login"}
+            onClick={() => handleClickItem("/auth/login")}
+          >
+            login
+          </UserControlItem>
+          {auth.token && (
             <UserControlItem
               selected={window.location.pathname === "/auth/logout"}
-              onClick={() => router.push("/auth/logout")}
+              onClick={() => handleClickItem("/auth/logout")}
             >
               logout
             </UserControlItem>

@@ -30,6 +30,8 @@ const Item = styled.li`
     border: none;
     background: transparent;
     cursor: pointer;
+
+    color: var(--delete-color);
   }
 
   img {

@@ -1,7 +1,8 @@
 "use client";
 
 import { DefaultLayout } from "@/components/default/defaultLayout";
-import { CartList } from "@/components/product/cart";
+import { Loader } from "@/components/loader";
+import { CartList } from "@/components/product/cart/cartList";
 import { CartResult } from "@/components/product/cart/cartResult";
 import { useCart } from "@/hooks/useCart";
 import { searchParamsMsg } from "@/utils/msg";
@@ -22,10 +23,12 @@ const DivContainer = styled.div`
 
 export default function Cart() {
   const router = useRouter();
-  const { cart, error } = useCart();
+  const { cart, error, isLoading } = useCart();
   const searchParams = useSearchParams();
 
   searchParamsMsg(searchParams);
+
+  if (isLoading) return <Loader />;
 
   if (error) {
     const params = new URLSearchParams();

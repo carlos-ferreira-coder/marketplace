@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/button";
 import { Divider } from "@/components/divider";
 import { CartResponseDTO } from "@/types/dto/cart/cartResponseDTO";

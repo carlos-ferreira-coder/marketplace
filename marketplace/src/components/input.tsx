@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export const PrimaryInput = styled.input`
-  width: 150px;
+  width: 250px;
   border: none;
   border-radius: 8px;
   padding: 10px 16px;
@@ -22,14 +22,14 @@ export const PrimaryInput = styled.input`
     box-shadow: 0 0 0 2px var(--orange-low);
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoint.xl}) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     width: 350px;
   }
 `;
 
 const InputContainer = styled.div`
   position: relative;
-  width: 150px;
+  width: 250px;
 
   svg {
     position: absolute;
@@ -39,15 +39,7 @@ const InputContainer = styled.div`
     color: var(--text-dark);
   }
 
-  &:focus {
-    transform: translateY(1px);
-  }
-
-  &:active {
-    transform: translateY(2px);
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoint.xl}) {
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
     width: 350px;
   }
 `;

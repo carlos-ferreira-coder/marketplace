@@ -57,11 +57,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   handleChange: (value: string) => void;
 }
 
-export function InputSearch(props: InputProps) {
+export function InputSearch({ handleChange, ...props }: InputProps) {
   return (
     <InputContainer>
       <Input
-        onChange={(event) => props.handleChange(event.target.value)}
+        onChange={(event) => handleChange(event.target.value)}
         {...props}
       />
       <FontAwesomeIcon icon={faSearch} />

@@ -25,7 +25,7 @@ export default function Product() {
   searchParamsMsg(searchParams);
   const { product, error, isLoading } = useProduct(params.id);
 
-  if (isLoading) return <Loader icon={IconLoader.spinner} />;
+  if (isLoading) return <Loader />;
 
   if (error) {
     let params = new URLSearchParams({
@@ -46,7 +46,7 @@ export default function Product() {
       {product && (
         <DivContainer>
           <BackBtn navigate="/" />
-          {product && <ProductInfo product={product} />}
+          <ProductInfo product={product} />
         </DivContainer>
       )}
     </DefaultLayout>

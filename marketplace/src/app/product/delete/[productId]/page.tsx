@@ -13,6 +13,7 @@ export default function ProductDelete() {
     if (!productId) {
       const param = new URLSearchParams({ "error-msg": "Informe um produto!" });
       router.push(`/?${param.toString()}`);
+      return;
     }
 
     deleteProduct({ productId: productId });

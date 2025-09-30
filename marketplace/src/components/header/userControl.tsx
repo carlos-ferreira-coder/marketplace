@@ -109,7 +109,7 @@ export const UserControl = () => {
 
       {isOpen && (
         <UserControlList isOpen={isOpen}>
-          {auth.role === "ADMIN" && (
+          {auth.token && auth.role === "ADMIN" && (
             <UserControlItem
               selected={window.location.pathname === "/product/create"}
               onClick={() => handleClickItem("/product/create")}

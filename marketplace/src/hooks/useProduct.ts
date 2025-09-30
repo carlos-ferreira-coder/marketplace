@@ -137,9 +137,11 @@ export const useProductMutation = () => {
         if (error.response?.status === 401) {
           params.append("error-msg", "Não autorizado!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         } else {
           params.append("error-msg", "Função de administrador necessária!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         }
       } else {
         params.append("error-msg", `Erro ao criar "${request.name}"!`);
@@ -173,9 +175,11 @@ export const useProductMutation = () => {
         if (error.response?.status === 401) {
           params.append("error-msg", "Não autorizado!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         } else if (error.response?.status === 403) {
           params.append("error-msg", "Função de administrador necessária!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         } else {
           params.append("error-msg", `"${product.name}" não encontrado!`);
         }
@@ -211,9 +215,11 @@ export const useProductMutation = () => {
         if (error.response?.status === 401) {
           params.append("error-msg", "Não autorizado!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         } else if (error.response?.status === 403) {
           params.append("error-msg", "Função de administrador necessária!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         } else {
           params.append("error-msg", `"${product.name}" não encontrado!`);
         }

@@ -43,7 +43,7 @@ export const RegisterForm = ({ submitFn }: RegisterFormProps) => {
     submitFn(request);
   };
 
-  const onError = (errors: FieldErrors<RegisterRequestDTO>) => {
+  const onError = (errors: FieldErrors<RegisterSchemaProps>) => {
     Object.values(errors).forEach((error) => {
       if (error?.message) {
         toast.error(error.message);

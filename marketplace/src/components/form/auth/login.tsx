@@ -42,7 +42,7 @@ export const LoginForm = ({ submitFn }: LoginFormProps) => {
     submitFn(request);
   };
 
-  const onError = (errors: FieldErrors<LoginRequestDTO>) => {
+  const onError = (errors: FieldErrors<LoginSchemaProps>) => {
     Object.values(errors).forEach((error) => {
       if (error?.message) {
         toast.error(error.message);

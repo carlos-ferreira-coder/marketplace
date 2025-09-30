@@ -33,6 +33,7 @@ export default function Login() {
     const productId = searchParams.get("productId");
     if (productId) {
       router.push(`/product/${productId}?${params.toString()}`);
+      return;
     }
 
     router.push(`/?${params.toString()}`);

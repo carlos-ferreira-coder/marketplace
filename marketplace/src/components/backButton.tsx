@@ -24,12 +24,8 @@ interface BtnProps {
 export function BackBtn({ navigate }: BtnProps) {
   const router = useRouter();
 
-  const handleNavigate = () => {
-    router.push(navigate);
-  };
-
   return (
-    <Button onClick={handleNavigate}>
+    <Button onClick={() => router.push(navigate)}>
       <IconBack />
       Voltar
     </Button>

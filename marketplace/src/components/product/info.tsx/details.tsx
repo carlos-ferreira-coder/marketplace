@@ -128,17 +128,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         </ProductDescription>
       </ProductInfo>
 
-      {role === "USER" ? (
-        <Button
-          background="info"
-          textTransform={"uppercase"}
-          onClick={handleCartAddProduct}
-          style={{ marginTop: "35px" }}
-        >
-          <IconCart />
-          Adicionar ao carrinho
-        </Button>
-      ) : (
+      {role === "ADMIN" ? (
         <div>
           <Button
             background="info"
@@ -159,6 +149,16 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
             Excluir produto
           </Button>
         </div>
+      ) : (
+        <Button
+          background="info"
+          textTransform={"uppercase"}
+          onClick={handleCartAddProduct}
+          style={{ marginTop: "35px" }}
+        >
+          <IconCart />
+          Adicionar ao carrinho
+        </Button>
       )}
     </DivContainer>
   );

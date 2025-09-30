@@ -56,12 +56,8 @@ export const ProductCard = ({
 }: ProductResponseDTO) => {
   const router = useRouter();
 
-  const handleNavigate = () => {
-    router.push(`/product/${id}`);
-  };
-
   return (
-    <Card onClick={handleNavigate}>
+    <Card onClick={() => router.push(`/product/${id}`)}>
       <img src={imageUrl} alt={name} />
       <div>
         <h3>{name}</h3>

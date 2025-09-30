@@ -117,12 +117,14 @@ export const useCartMutation = () => {
       if (axios.isAxiosError(error)) {
         params.append("warning-msg", "Não autorizado!");
         router.push(`/auth/login?${params.toString()}`);
+        return;
       }
 
       params.append(
         "error-msg",
         `Erro ao adicionar "${product.name}" no carrinho!`
       );
+
       router.push(`/cart?${params.toString()}`);
     },
   });
@@ -153,6 +155,7 @@ export const useCartMutation = () => {
         if (error.response?.status === 401) {
           params.append("error-msg", "Não autorizado!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         } else {
           params.append(
             "error-msg",
@@ -196,6 +199,7 @@ export const useCartMutation = () => {
         if (error.response?.status === 401) {
           params.append("error-msg", "Não autorizado!");
           router.push(`/auth/login?${params.toString()}`);
+          return;
         } else {
           params.append(
             "error-msg",

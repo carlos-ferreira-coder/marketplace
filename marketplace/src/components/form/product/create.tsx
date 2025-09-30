@@ -35,8 +35,6 @@ export const CreateProductForm = ({ submitFn }: CreateProductFormProps) => {
   });
 
   const onSubmit = async (request: CreateProductSchemaProps) => {
-    console.log(file);
-
     if (!file) {
       toast.error("Selecione uma imagem!");
       return;

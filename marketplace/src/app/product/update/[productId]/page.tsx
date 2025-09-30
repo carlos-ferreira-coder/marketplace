@@ -21,12 +21,13 @@ export default function UpdateProduct() {
     if (!productId) {
       const param = new URLSearchParams({ "error-msg": "Informe um produto!" });
       router.push(`/?${param.toString()}`);
+      return;
     }
   }, [productId, router]);
 
   return (
     <DefaultLayout>
-      <UpdateProductForm submitFn={updateProduct} />
+      <UpdateProductForm submitFn={updateProduct} productId={productId} />
     </DefaultLayout>
   );
 }

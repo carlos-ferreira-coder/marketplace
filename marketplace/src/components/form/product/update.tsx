@@ -9,26 +9,55 @@ import {
   faAlignLeft,
   faDollarSign,
   faFileImage,
+  faIdCard,
   faTag,
 } from "@fortawesome/free-solid-svg-icons";
 import { UpdateProductResponseDTO } from "@/types/dto/product/updateProductResponseDTO";
+import { useState } from "react";
+import { handleChangeFile } from "@/schemas/product/file";
+import { useProduct } from "@/hooks/useProduct";
+import {
+  updateProductSchema,
+  UpdateProductSchemaProps,
+} from "@/schemas/product/update";
 
 interface UpdateProductFormProps {
+  productId: string;
   submitFn: (
     request: UpdateProductRequestDTO
   ) => Promise<UpdateProductResponseDTO>;
 }
 
-export const UpdateProductForm = ({ submitFn }: UpdateProductFormProps) => {
+export const UpdateProductForm = ({
+  submitFn,
+  productId,
+}: UpdateProductFormProps) => {
+  const { product } = useProduct(productId);
+  const [file, setFile] = useState<File | null>(null);
+
   const { reset, register, handleSubmit } = useForm<UpdateProductSchemaProps>({
-    resolver: zodResolver(UpdateProductSchema),
-    defaultValues: UpdateProductDefaultValues,
+    resolver: zodResolver(updateProductSchema),
+    defaultValues: product ?? undefined,
   });
 
-  const onSubmit = async (request: UpdateProductSchemaProps) =>
-    await submitFn(request);
+  const onSubmit = async (request: UpdateProductSchemaProps) => {
+    if (!file) {
+      toast.error("Selecione uma imagem!");
+      return;
+    }
 
-  const onError = (errors: FieldErrors<UpdateProductRequestDTO>) => {
+    const payload: UpdateProductRequestDTO = {
+      id: request.id,
+      name: request.name,
+      description: request.description,
+      image: file,
+      price: request.price,
+    };
+
+    return await submitFn(payload);
+  };
+
+  const onError = (errors: FieldErrors<UpdateProductSchemaProps>) => {
     Object.values(errors).forEach((error) => {
       if (error?.message) {
         toast.error(error.message);
@@ -38,6 +67,8 @@ export const UpdateProductForm = ({ submitFn }: UpdateProductFormProps) => {
 
   return (
     <FormStyled onSubmit={handleSubmit(onSubmit, onError)}>
+      <InputIcon icon={faIdCard} {...register("id")} disabled />
+
       <InputIcon
         icon={faTag}
         {...register("name")}
@@ -52,10 +83,14 @@ export const UpdateProductForm = ({ submitFn }: UpdateProductFormProps) => {
 
       <InputIcon
         icon={faFileImage}
-        {...register("image")}
         type="file"
         accept="image/*"
         placeholder="Selecione uma imagem"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          const isChanged = handleChangeFile(event, setFile);
+          if (isChanged?.error)
+            isChanged.error.issues.map((e) => toast.error(e.message));
+        }}
       />
 
       <InputIcon
@@ -67,12 +102,12 @@ export const UpdateProductForm = ({ submitFn }: UpdateProductFormProps) => {
       />
 
       <ButtonContainer>
-        <Button type="submit">UpdateProduct</Button>
+        <Button type="submit">Cadastar</Button>
 
         <Button
           type="button"
           background={"white"}
-          onClick={() => reset(UpdateProductDefaultValues)}
+          onClick={() => reset(product ?? undefined)}
         >
           limpar
         </Button>

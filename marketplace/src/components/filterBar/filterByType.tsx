@@ -1,3 +1,5 @@
+"use client";
+
 import { useFilter } from "@/hooks/useFilter";
 import { FilterType, FilterTypeLabels } from "@/types/filterType";
 import styled from "styled-components";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useCart } from "../../hooks/useCart";
 import styled from "styled-components";
 import { IconCart } from "../icons/cart";

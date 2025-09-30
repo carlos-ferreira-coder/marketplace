@@ -1,3 +1,5 @@
+"use client";
+
 import styled, { useTheme } from "styled-components";
 import { Pagination } from "@/hooks/usePagination";
 import {

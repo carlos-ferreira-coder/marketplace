@@ -1,3 +1,5 @@
+"use client";
+
 import { InputIcon } from "@/components/input";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";

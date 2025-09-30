@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { ProductDetails } from "./details";

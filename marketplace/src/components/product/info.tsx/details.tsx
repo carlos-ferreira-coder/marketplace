@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/button";
 import { IconCart } from "@/components/icons/cart";
 import { useAuth } from "@/hooks/useAuth";

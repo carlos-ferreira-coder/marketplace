@@ -1,3 +1,5 @@
+"use client";
+
 import { InputIcon } from "@/components/input";
 import {
   loginDefaultValues,

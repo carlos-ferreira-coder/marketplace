@@ -1,3 +1,5 @@
+"use client";
+
 import { Divider } from "@/components/divider";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";

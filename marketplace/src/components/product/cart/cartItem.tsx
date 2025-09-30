@@ -1,3 +1,5 @@
+"use client";
+
 import { useCartMutation } from "@/hooks/useCart";
 import { ItemsResponseDTO } from "@/types/dto/cart/itemsResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";

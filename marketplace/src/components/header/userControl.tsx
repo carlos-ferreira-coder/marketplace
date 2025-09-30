@@ -1,9 +1,10 @@
+"use client";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { IconUser } from "../icons/user";
 import { useRouter } from "next/navigation";
-import { Divider } from "../divider";
 
 interface UserControlListProps {
   isOpen: boolean;

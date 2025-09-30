@@ -35,7 +35,7 @@ export default function Home() {
       router.push(`/product/${productId}?${params.toString()}`);
       return;
     }
-  }, []);
+  }, [router, searchParams]);
 
   return (
     <DefaultLayout>

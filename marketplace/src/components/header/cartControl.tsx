@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import axios from "axios";
 import { Loader } from "../loader";
+import { useAuth } from "@/hooks/useAuth";
 
 const DivContainer = styled.div`
   position: relative;
@@ -30,6 +31,7 @@ const CartCountItems = styled.span`
 `;
 
 export const CartControl = () => {
+  const auth = useAuth();
   const { cart, error, isLoading } = useCart();
   const router = useRouter();
 
@@ -54,7 +56,8 @@ export const CartControl = () => {
   if (isLoading) return <Loader />;
 
   return (
-    cart && (
+    cart &&
+    auth.role === "USER" && (
       <DivContainer onClick={() => router.push("/cart")}>
         <IconCart />
         {cart.totalItems > 0 && (

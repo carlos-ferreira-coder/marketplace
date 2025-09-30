@@ -5,7 +5,7 @@ import { FilterBar } from "@/components/filterBar";
 import { PageBar } from "@/components/pageBar";
 import { ProductList } from "@/components/product/list";
 import { searchParamsMsg } from "@/utils/msg";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import styled from "styled-components";
 
@@ -17,11 +17,25 @@ const PageWrapper = styled.main`
 `;
 
 export default function Home() {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     searchParamsMsg(searchParams);
   }, [searchParams]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    const productId = searchParams.get("productId");
+    if (productId) {
+      const successMsg = searchParams.get("success-msg");
+      if (successMsg) params.append("success-msg", successMsg);
+
+      router.push(`/product/${productId}?${params.toString()}`);
+      return;
+    }
+  }, []);
 
   return (
     <DefaultLayout>

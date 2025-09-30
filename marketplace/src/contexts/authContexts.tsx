@@ -92,7 +92,8 @@ export const AuthContextsProvider = ({
     localStorage.setItem("role", "");
     localStorage.setItem("token", "");
 
-    queryClient.invalidateQueries({ queryKey: ["cart"] });
+    queryClient.removeQueries({ queryKey: ["cart"] });
+    queryClient.setQueryData(["cart"], null);
 
     const params = new URLSearchParams({
       "success-msg": "Deslogado com sucesso!",

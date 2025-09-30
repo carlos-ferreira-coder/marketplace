@@ -1,23 +1,14 @@
-# 1. Imagem base leve
-FROM node:20-alpine
 
-# 2. Diretório de trabalho
+FROM node:20-alpine AS frontend
+
 WORKDIR /app
 
-# 3. Copiar apenas arquivos de dependências
-COPY package.json package-lock.json ./
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm install
 
-# 4. Instalar dependências de produção
-RUN npm install --production
+COPY frontend ./
 
-# 5. Copiar todo o projeto
-COPY . .
-
-# 7. Build do Next.js (ou Node.js)
 RUN npm run build
 
-# 8. Expor porta da aplicação
-EXPOSE 3001
-
-# 9. Comando de start: rodar migrations e iniciar app
-CMD ["sh", "-c", "npm start"]
+EXPOSE 3000
+CMD ["npm", "start"]

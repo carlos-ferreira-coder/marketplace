@@ -15,7 +15,7 @@ export default function ProductDelete() {
       router.push(`/?${param.toString()}`);
     }
 
-    deleteProduct({ id: productId });
+    deleteProduct({ productId: productId });
   }, [productId, router, deleteProduct]);
 
   return <></>;

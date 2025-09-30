@@ -2,7 +2,6 @@ import { Button } from "@/components/button";
 import { IconCart } from "@/components/icons/cart";
 import { useAuth } from "@/hooks/useAuth";
 import { useCartMutation } from "@/hooks/useCart";
-import { CartAddProductRequestDTO } from "@/types/dto/cart/cartAddProductRequestDTO";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
 import { numberToBrl } from "@/utils/numberToBrl";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";

@@ -5,7 +5,7 @@ import { searchParamsMsg } from "@/utils/msg";
 import { useAuth } from "@/hooks/useAuth";
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
 import { toast } from "react-toastify";
-import { DefaultLayout } from "@/components/default/defaultLayout";
+import { DefaultLayout } from "@/components/default/layout";
 import { LoginForm } from "../../../components/form/auth/login";
 import { useEffect } from "react";
 
@@ -40,7 +40,7 @@ export default function Login() {
 
   return (
     <DefaultLayout>
-      <LoginForm login={handleLogin} />
+      <LoginForm submitFn={handleLogin} />
     </DefaultLayout>
   );
 }

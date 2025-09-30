@@ -92,14 +92,14 @@ export const useCartMutation = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutate: cartAddProduct } = useMutation({
+  const { mutateAsync: cartAddProduct } = useMutation({
     mutationFn: (payload: CartAddProductRequestDTO) =>
       cartAddProductFn(token!, payload!),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
-    onSuccess: async (_data, payload) => {
-      const product = await fetcherProduct(payload.productId);
+    onSuccess: async (_response, request) => {
+      const product = await fetcherProduct(request.productId);
 
       const params = new URLSearchParams({
         "success-msg": `"${product.name}" inserido(a) no carrinho!`,
@@ -107,11 +107,11 @@ export const useCartMutation = () => {
 
       router.push(`/cart?${params.toString()}`);
     },
-    onError: async (error, payload) => {
-      const product = await fetcherProduct(payload.productId);
+    onError: async (error, request) => {
+      const product = await fetcherProduct(request.productId);
 
       const params = new URLSearchParams({
-        productId: payload.productId,
+        productId: request.productId,
       });
 
       if (axios.isAxiosError(error)) {
@@ -127,26 +127,26 @@ export const useCartMutation = () => {
     },
   });
 
-  const { mutate: cartDecreaseQuantity } = useMutation({
+  const { mutateAsync: cartDecreaseQuantity } = useMutation({
     mutationFn: (payload: CartDecreaseQuantityRequestDTO) =>
       cartDecreaseQuantityFn(token!, payload!),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
-    onSuccess: async (_data, payload) => {
-      const product = await fetcherProduct(payload.productId);
+    onSuccess: async (_response, request) => {
+      const product = await fetcherProduct(request.productId);
 
       const params = new URLSearchParams({
-        "success-msg": `"${product.name}" atualizado(a) no carrinho!`,
+        "success-msg": `"${product.name}" diminuido(a) do carrinho!`,
       });
 
       router.push(`/cart?${params.toString()}`);
     },
-    onError: async (error, payload) => {
-      const product = await fetcherProduct(payload.productId);
+    onError: async (error, request) => {
+      const product = await fetcherProduct(request.productId);
 
       const params = new URLSearchParams({
-        productId: payload.productId,
+        productId: request.productId,
       });
 
       if (axios.isAxiosError(error)) {
@@ -170,14 +170,14 @@ export const useCartMutation = () => {
     },
   });
 
-  const { mutate: cartRemoveProduct } = useMutation({
+  const { mutateAsync: cartRemoveProduct } = useMutation({
     mutationFn: (payload: CartRemoveProductRequestDTO) =>
       cartRemoveProductFn(token!, payload!),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
-    onSuccess: async (_data, payload) => {
-      const product = await fetcherProduct(payload.productId);
+    onSuccess: async (_response, request) => {
+      const product = await fetcherProduct(request.productId);
 
       const params = new URLSearchParams({
         "success-msg": `"${product.name}" removido(a) no carrinho!`,
@@ -185,11 +185,11 @@ export const useCartMutation = () => {
 
       router.push(`/cart?${params.toString()}`);
     },
-    onError: async (error, payload) => {
-      const product = await fetcherProduct(payload.productId);
+    onError: async (error, request) => {
+      const product = await fetcherProduct(request.productId);
 
       const params = new URLSearchParams({
-        productId: payload.productId,
+        productId: request.productId,
       });
 
       if (axios.isAxiosError(error)) {

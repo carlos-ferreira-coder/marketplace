@@ -1,13 +1,13 @@
 "use client";
 
 import { BackBtn } from "@/components/backButton";
-import { DefaultLayout } from "@/components/default/defaultLayout";
+import { DefaultLayout } from "@/components/default/layout";
 import { Loader } from "@/components/loader";
 import { useProduct } from "@/hooks/useProduct";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import axios from "axios";
-import { ProductInfo } from "@/components/product/productInfo.tsx";
+import { ProductInfo } from "@/components/product/info.tsx";
 import { searchParamsMsg } from "@/utils/msg";
 import { useEffect } from "react";
 

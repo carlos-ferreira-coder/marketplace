@@ -1,10 +1,9 @@
 "use client";
 
 import { useProducts } from "@/hooks/useProducts";
-import { ProductCard } from "./productCart";
+import { ProductCard } from "./cart";
 import styled from "styled-components";
 import { Loader } from "../../loader";
-import { toast } from "react-toastify";
 import { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";

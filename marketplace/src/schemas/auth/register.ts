@@ -55,7 +55,7 @@ export const registerSchema = z
     }
   });
 
-export type registerSchemaProps = z.infer<typeof registerSchema>;
+export type RegisterSchemaProps = z.infer<typeof registerSchema>;
 
 export const registerDefaultValues = {
   name: "",

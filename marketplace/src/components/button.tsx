@@ -46,3 +46,23 @@ export const Button = styled.button<ButtonProps>`
     props.background !== "white" ? "white" : "var(--text-dark)"};
   cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 `;
+
+interface BtnNavigateProps {
+  underline?: boolean;
+}
+
+export const BtnNavigate = styled.button<BtnNavigateProps>`
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  color: ${(props) => props.color};
+
+  text-decoration: ${(props) => (props.underline ? "underline" : "none")};
+  padding: 0;
+  margin: 0;
+
+  &:hover {
+    transform: translateY(2px);
+  }
+`;

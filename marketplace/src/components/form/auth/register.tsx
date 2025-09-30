@@ -3,7 +3,7 @@ import { InputIcon } from "@/components/input";
 import {
   registerDefaultValues,
   registerSchema,
-  registerSchemaProps,
+  RegisterSchemaProps,
 } from "@/schemas/auth/register";
 import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
 import {
@@ -17,22 +17,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { ButtonContainer, Form } from ".";
+import { ButtonContainer, FormStyled } from "..";
 
 interface RegisterFormProps {
-  register: (request: RegisterRequestDTO) => Promise<void>;
+  submitFn: (request: RegisterRequestDTO) => Promise<void>;
 }
 
-export const RegisterForm = ({ register: registerUser }: RegisterFormProps) => {
+export const RegisterForm = ({ submitFn }: RegisterFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { reset, register, handleSubmit } = useForm<registerSchemaProps>({
+  const { reset, register, handleSubmit } = useForm<RegisterSchemaProps>({
     resolver: zodResolver(registerSchema),
     defaultValues: registerDefaultValues,
   });
 
-  const onSubmit = (request: registerSchemaProps) => {
+  const onSubmit = (request: RegisterSchemaProps) => {
     const params = new URLSearchParams();
 
     const productId = searchParams.get("productId");
@@ -40,19 +40,19 @@ export const RegisterForm = ({ register: registerUser }: RegisterFormProps) => {
 
     router.replace(`${window.location.pathname}?${params.toString()}`);
 
-    registerUser(request);
+    submitFn(request);
   };
 
   const onError = (errors: FieldErrors<RegisterRequestDTO>) => {
-    if (errors.name) toast.error(errors.name.message);
-    if (errors.email) toast.error(errors.email.message);
-    if (errors.password) toast.error(errors.password.message);
-    if (errors.phone) toast.error(errors.phone.message);
-    if (errors.cpf) toast.error(errors.cpf.message);
+    Object.values(errors).forEach((error) => {
+      if (error?.message) {
+        toast.error(error.message);
+      }
+    });
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <FormStyled onSubmit={handleSubmit(onSubmit, onError)}>
       <InputIcon
         icon={faUser}
         {...register("name")}
@@ -102,6 +102,6 @@ export const RegisterForm = ({ register: registerUser }: RegisterFormProps) => {
           limpar
         </Button>
       </ButtonContainer>
-    </Form>
+    </FormStyled>
   );
 };

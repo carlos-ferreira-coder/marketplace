@@ -1,34 +1,27 @@
 import z from "zod";
 
-const minLength = 8;
-const maxLength = 20;
-const hasUppercase = /[A-Z]/;
-const hasLowercase = /[a-z]/;
-const hasNumber = /\d/;
-const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
-
 export const loginSchema = z.object({
   email: z.email("Por favor, digite um e-mail válido!"),
 
   password: z
     .string()
-    .min(minLength, `A senha deve ter no mínimo ${minLength} caracteres`)
-    .max(maxLength, `A senha deve ter no máximo ${maxLength} caracteres`)
-    .refine((val) => hasUppercase.test(val), {
+    .min(8, "A senha deve ter no mínimo 8 caracteres")
+    .max(20, "A senha deve ter no máximo 20 caracteres")
+    .refine((s) => /[A-Z]/.test(s), {
       message: "A senha deve conter pelo menos uma letra maiúscula",
     })
-    .refine((val) => hasLowercase.test(val), {
+    .refine((s) => /[a-z]/.test(s), {
       message: "A senha deve conter pelo menos uma letra minúscula",
     })
-    .refine((val) => hasNumber.test(val), {
+    .refine((s) => /\d/.test(s), {
       message: "A senha deve conter pelo menos um número",
     })
-    .refine((val) => hasSpecialChar.test(val), {
+    .refine((s) => /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(s), {
       message: "A senha deve conter pelo menos um caractere especial",
     }),
 });
 
-export type loginSchemaProps = z.infer<typeof loginSchema>;
+export type LoginSchemaProps = z.infer<typeof loginSchema>;
 
 export const loginDefaultValues = {
   email: "",

@@ -2,31 +2,36 @@ import { InputIcon } from "@/components/input";
 import {
   loginDefaultValues,
   loginSchema,
-  loginSchemaProps,
+  LoginSchemaProps,
 } from "@/schemas/auth/login";
 import { LoginRequestDTO } from "@/types/dto/user/loginRequestDTO";
-import { faLock, faUserTie } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChildReaching,
+  faLock,
+  faUserTie,
+} from "@fortawesome/free-solid-svg-icons";
 import { FieldErrors, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/button";
+import { BtnNavigate, Button } from "@/components/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ButtonContainer, Form } from ".";
+import { ButtonContainer, FormStyled } from "..";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface LoginFormProps {
-  login: (request: LoginRequestDTO) => Promise<void>;
+  submitFn: (request: LoginRequestDTO) => Promise<void>;
 }
 
-export const LoginForm = ({ login }: LoginFormProps) => {
+export const LoginForm = ({ submitFn }: LoginFormProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { reset, register, handleSubmit } = useForm<loginSchemaProps>({
+  const { reset, register, handleSubmit } = useForm<LoginSchemaProps>({
     resolver: zodResolver(loginSchema),
     defaultValues: loginDefaultValues,
   });
 
-  const onSubmit = (request: loginSchemaProps) => {
+  const onSubmit = (request: LoginSchemaProps) => {
     const params = new URLSearchParams();
 
     const productId = searchParams.get("productId");
@@ -34,16 +39,28 @@ export const LoginForm = ({ login }: LoginFormProps) => {
 
     router.replace(`${window.location.pathname}?${params.toString()}`);
 
-    login(request);
+    submitFn(request);
   };
 
   const onError = (errors: FieldErrors<LoginRequestDTO>) => {
-    if (errors.email) toast.error(errors.email.message);
-    if (errors.password) toast.error(errors.password.message);
+    Object.values(errors).forEach((error) => {
+      if (error?.message) {
+        toast.error(error.message);
+      }
+    });
+  };
+
+  const handleNavigate = (navigate: string) => {
+    const params = new URLSearchParams();
+
+    const productId = searchParams.get("productId");
+    if (productId) params.append(productId, productId);
+
+    router.push(`${navigate}?${params.toString()}`);
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <FormStyled onSubmit={handleSubmit(onSubmit, onError)}>
       <InputIcon
         icon={faUserTie}
         {...register("email")}
@@ -56,6 +73,16 @@ export const LoginForm = ({ login }: LoginFormProps) => {
         placeholder="Digite sua senha..."
       />
 
+      <BtnNavigate
+        underline
+        color="var(--orange-low)"
+        onClick={() => handleNavigate("/auth/register")}
+        aria-label="Cadastro"
+      >
+        <FontAwesomeIcon icon={faChildReaching} />
+        ainda não tenho cadastro!
+      </BtnNavigate>
+
       <ButtonContainer>
         <Button type="submit">login</Button>
 
@@ -67,6 +94,6 @@ export const LoginForm = ({ login }: LoginFormProps) => {
           limpar
         </Button>
       </ButtonContainer>
-    </Form>
+    </FormStyled>
   );
 };

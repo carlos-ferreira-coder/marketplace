@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { IconUser } from "../icons/user";
 import { useRouter } from "next/navigation";
+import { Divider } from "../divider";
 
 interface UserControlListProps {
   isOpen: boolean;
@@ -116,19 +117,15 @@ export const UserControl = () => {
               Cadastrar Produto
             </UserControlItem>
           )}
-          <UserControlItem
-            selected={window.location.pathname === "/auth/register"}
-            onClick={() => handleClickItem("/auth/register")}
-          >
-            cadastrar usuário
-          </UserControlItem>
-          <UserControlItem
-            selected={window.location.pathname === "/auth/login"}
-            onClick={() => handleClickItem("/auth/login")}
-          >
-            login
-          </UserControlItem>
-          {auth.token && (
+
+          {!auth.token ? (
+            <UserControlItem
+              selected={window.location.pathname === "/auth/login"}
+              onClick={() => handleClickItem("/auth/login")}
+            >
+              login
+            </UserControlItem>
+          ) : (
             <UserControlItem
               selected={window.location.pathname === "/auth/logout"}
               onClick={() => handleClickItem("/auth/logout")}

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { ProductDetails } from "./productDetails";
 import { ProductResponseDTO } from "@/types/dto/product/productResponseDTO";
+import { ProductDetails } from "./details";
 
 const SectionContainer = styled.section`
   display: flex;

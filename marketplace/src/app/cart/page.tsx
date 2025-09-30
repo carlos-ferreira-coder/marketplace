@@ -1,6 +1,6 @@
 "use client";
 
-import { DefaultLayout } from "@/components/default/defaultLayout";
+import { DefaultLayout } from "@/components/default/layout";
 import { Loader } from "@/components/loader";
 import { CartList } from "@/components/product/cart/cartList";
 import { CartResult } from "@/components/product/cart/cartResult";

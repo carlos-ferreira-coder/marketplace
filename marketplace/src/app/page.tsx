@@ -1,9 +1,9 @@
 "use client";
 
-import { DefaultLayout } from "@/components/default/defaultLayout";
+import { DefaultLayout } from "@/components/default/layout";
 import { FilterBar } from "@/components/filterBar";
 import { PageBar } from "@/components/pageBar";
-import { ProductList } from "@/components/product/productsList";
+import { ProductList } from "@/components/product/list";
 import { searchParamsMsg } from "@/utils/msg";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";

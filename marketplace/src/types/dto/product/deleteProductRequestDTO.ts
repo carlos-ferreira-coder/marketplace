@@ -1,3 +1,3 @@
 export interface DeleteProductRequestDTO {
-  id: string;
+  productId: string;
 }

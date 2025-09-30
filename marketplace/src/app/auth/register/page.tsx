@@ -1,6 +1,6 @@
 "use client";
 
-import { DefaultLayout } from "@/components/default/defaultLayout";
+import { DefaultLayout } from "@/components/default/layout";
 import { RegisterForm } from "@/components/form/auth/register";
 import { useAuth } from "@/hooks/useAuth";
 import { RegisterRequestDTO } from "@/types/dto/user/registerRequestDTO";
@@ -32,7 +32,7 @@ export default function Register() {
 
   return (
     <DefaultLayout>
-      <RegisterForm register={handleRegister} />
+      <RegisterForm submitFn={handleRegister} />
     </DefaultLayout>
   );
 }

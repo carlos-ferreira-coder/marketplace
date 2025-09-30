@@ -90,7 +90,7 @@ const deleteProductFn = async (
   deleteProduct: DeleteProductRequestDTO
 ): Promise<DeleteProductResponseDTO> => {
   const { data: response } = await api.delete<DeleteProductResponseDTO>(
-    `/products/${deleteProduct.id}`,
+    `/products/${deleteProduct.productId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -117,46 +117,94 @@ export const useProductMutation = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutate: createProduct } = useMutation({
+  const { mutateAsync: createProduct } = useMutation({
     mutationFn: (payload: CreateProductRequestDTO) =>
       createProductFn(token!, payload!),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: (response) => {
+      const params = new URLSearchParams({
+        "success-msg": `"${response.name}" cadastrado(a) com sucesso!`,
+      });
+
+      router.push(`/product/create?${params.toString()}`);
+    },
+    onError: (error, request) => {
+      const params = new URLSearchParams();
+
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          params.append("error-msg", "Não autorizado!");
+          router.push(`/auth/login?${params.toString()}`);
+        } else {
+          params.append("error-msg", "Função de administrador necessária!");
+          router.push(`/auth/login?${params.toString()}`);
+        }
+      } else {
+        params.append("error-msg", `Erro ao criar "${request.name}"!`);
+      }
+
+      router.push(`/product/create?${params.toString()}`);
+    },
   });
 
-  const { mutate: updateProduct } = useMutation({
+  const { mutateAsync: updateProduct } = useMutation({
     mutationFn: (payload: UpdateProductRequestDTO) =>
       updateProductFn(token!, payload!),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: (response) => {
+      const params = new URLSearchParams({
+        "success-msg": `"${response.name}" atualizado(a) com sucesso!`,
+      });
+
+      router.push(`/product/update/${response.id}?${params.toString()}`);
+    },
+    onError: async (error, request) => {
+      const product = await fetcherProduct(request.id);
+
+      const params = new URLSearchParams({
+        productId: request.id,
+      });
+
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          params.append("error-msg", "Não autorizado!");
+          router.push(`/auth/login?${params.toString()}`);
+        } else if (error.response?.status === 403) {
+          params.append("error-msg", "Função de administrador necessária!");
+          router.push(`/auth/login?${params.toString()}`);
+        } else {
+          params.append("error-msg", `"${product.name}" não encontrado!`);
+        }
+      } else {
+        params.append("error-msg", `Erro ao atualizar "${product.name}"!`);
+      }
+
+      router.push(`/product/update?${params.toString()}`);
+    },
   });
 
-  const { mutate: deleteProduct } = useMutation({
+  const { mutateAsync: deleteProduct } = useMutation({
     mutationFn: (payload: DeleteProductRequestDTO) =>
       deleteProductFn(token!, payload!),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
-    onSuccess: async (_data, variables) => {
-      const product = await fetcherProduct(variables.id);
-
-      const searchParams = new URLSearchParams({
-        "success-msg": `"${product.name}" deletado(a) com sucesso!`,
+    onSuccess: (response) => {
+      const params = new URLSearchParams({
+        "success-msg": `"${response.product.name}" deletado(a) com sucesso!`,
       });
 
-      router.push(`/?${searchParams.toString()}`);
+      router.push(`/?${params.toString()}`);
     },
-    onError: async (error, variables) => {
-      const product = await fetcherProduct(variables.id);
+    onError: async (error, request) => {
+      const product = await fetcherProduct(request.productId);
 
       const params = new URLSearchParams({
-        productId: variables.id,
+        productId: request.productId,
       });
 
       if (axios.isAxiosError(error)) {
@@ -173,7 +221,7 @@ export const useProductMutation = () => {
         params.append("error-msg", `Erro ao deletar "${product.name}"!`);
       }
 
-      router.push(`/cart?${params.toString()}`);
+      router.push(`/?${params.toString()}`);
     },
   });
 
